@@ -1,3 +1,4 @@
+import 'package:dio_todo_list/core/api/auth_service.dart';
 import 'package:dio_todo_list/widgets/txtfield/custom_txtfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -27,16 +28,21 @@ class LoginScreenView extends GetView<LoginScreenController> {
               controller: controller.passwordCtrl,
             ),
             SizedBox(height: 30),
-            Container(
-              height: 52,
-              decoration: BoxDecoration(
-                color: Colors.black,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Center(
-                child: Text(
-                  "Login",
-                  style: TextStyle(fontSize: 20, color: Colors.white),
+            GestureDetector(
+              onTap: () {
+                controller.login();
+              },
+              child: Container(
+                height: 52,
+                decoration: BoxDecoration(
+                  color: Colors.black,
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Center(
+                  child: Text(
+                    "Login",
+                    style: TextStyle(fontSize: 20, color: Colors.white),
+                  ),
                 ),
               ),
             ),
