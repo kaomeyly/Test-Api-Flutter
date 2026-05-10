@@ -17,7 +17,7 @@ class customtextfield extends StatelessWidget {
       controller: controller,
       decoration: InputDecoration(
         hintText: hintText,
-        border: OutlineInputBorder(borderRadius: BorderRadius.circular(18)),
+        border: OutlineInputBorder(borderRadius: BorderRadius.circular(19)),
       ),
     );
   }
