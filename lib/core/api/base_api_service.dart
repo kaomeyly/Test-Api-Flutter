@@ -15,4 +15,19 @@ class BaseApiService {
       debugPrint("Error : ${e.message}");
     }
   }
+
+  Future<dynamic> get({
+    required String endpoint,
+    Map<String, dynamic>? queryParameters,
+  }) async {
+    try {
+      var response = apiConfig.dio.get(
+        endpoint,
+        queryParameters: queryParameters,
+      );
+      return response;
+    } on DioException catch (e) {
+      debugPrint("Error : ${e.message}");
+    }
+  }
 }

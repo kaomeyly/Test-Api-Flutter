@@ -1,7 +1,9 @@
 import 'package:dio_todo_list/core/api/auth_service.dart';
+import 'package:dio_todo_list/routes/app_routes.dart';
 import 'package:dio_todo_list/widgets/txtfield/custom_txtfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 part 'login_screen_binding.dart';
 part 'login_screen_controller.dart';
@@ -38,12 +40,33 @@ class LoginScreenView extends GetView<LoginScreenController> {
                   color: Colors.black,
                   borderRadius: BorderRadius.circular(16),
                 ),
-                child: Center(
-                  child: Text(
-                    "Login",
-                    style: TextStyle(fontSize: 20, color: Colors.white),
+                child: Obx(
+                  () => Center(
+                    child: controller.isLoading.value
+                        ? CircularProgressIndicator()
+                        : Text(
+                            "Login",
+                            style: TextStyle(fontSize: 20, color: Colors.white),
+                          ),
                   ),
                 ),
+              ),
+            ),
+            SizedBox(height: 30),
+            GestureDetector(
+              onTap: () {
+                Get.toNamed(AppRoutes.register);
+              },
+              child: Row(
+                mainAxisAlignment: .center,
+                children: [
+                  Text("Don't have an account?"),
+                  SizedBox(width: 5),
+                  Text(
+                    "Sign up",
+                    style: TextStyle(decoration: TextDecoration.underline),
+                  ),
+                ],
               ),
             ),
           ],

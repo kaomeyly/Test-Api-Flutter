@@ -13,4 +13,21 @@ class AuthService {
     );
     return response;
   }
+
+  Future<Map<String, dynamic>> registerService({
+    required String name,
+    required String email,
+    required String password,
+  }) async {
+    var response = await baseApi.post(
+      endpoint: "/api/auth/register",
+      data: {"name": name, "email": email, "password": password},
+    );
+    return response;
+  }
+
+  Future <Map<String, dynamic>>fetchProfile() async{
+    var response = await baseApi.get(endpoint: "/api/profile/me");
+    return response;
+  } 
 }
