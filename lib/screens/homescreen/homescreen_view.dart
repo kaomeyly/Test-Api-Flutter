@@ -44,7 +44,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
             Text(
               "kaomeyly@gmail.com",
               style: TextStyle(
-                fontSize: 13,
+                fontSize: 16,
                 fontWeight: FontWeight.normal,
                 height: 1.2,
               ),
