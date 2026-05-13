@@ -21,11 +21,11 @@ class BaseApiService {
     Map<String, dynamic>? queryParameters,
   }) async {
     try {
-      var response = apiConfig.dio.get(
+      var response = await apiConfig.dio.get(
         endpoint,
         queryParameters: queryParameters,
       );
-      return response;
+      return response.data;
     } on DioException catch (e) {
       debugPrint("Error : ${e.message}");
     }
