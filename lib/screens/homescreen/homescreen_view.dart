@@ -15,8 +15,14 @@ class HomescreenView extends GetView<HomescreenViewController> {
 
   @override
   Widget build(BuildContext context) {
-    // controller.getProfile();
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          controller.createTasks();
+          controller.getTasks();
+        },
+        child: Icon(Icons.add),
+      ),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(20.0),
@@ -27,11 +33,20 @@ class HomescreenView extends GetView<HomescreenViewController> {
                     ? _buildProfilePlaceholder()
                     : _buildProfileHeader(),
               ),
-              ElevatedButton(
-                onPressed: () {
-                  controller.logout();
-                },
-                child: Text("Logout"),
+              Obx(
+                () => ListView.separated(
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    return ListTile(
+                      title: Text(controller.tasks[index]["name"]),
+                      subtitle: Text(controller.tasks[index]["description"]),
+                    );
+                  },
+                  separatorBuilder: (context, index) {
+                    return SizedBox(height: 10);
+                  },
+                  itemCount: controller.tasks.length,
+                ),
               ),
             ],
           ),

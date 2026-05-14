@@ -8,4 +8,16 @@ class TasksSerevice {
 
     return response;
   }
+
+  Future<Map<String, dynamic>> createTasks({
+    required String name,
+    required String description,
+  }) async {
+    var response = await baseApiServie.post(
+      endpoint: "/api/tasks",
+      data: {"name": name, "description": description},
+    );
+
+    return response;
+  }
 }
