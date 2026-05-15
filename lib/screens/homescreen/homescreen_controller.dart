@@ -30,16 +30,7 @@ class HomescreenViewController extends GetxController {
     debugPrint(response.toString());
   }
 
-  void createTasks() async {
-    var response = await taskSerive.createTasks(
-      name: "Task 05",
-      description: "Task 5",
-    );
-    if (response["result"]==true){
-      Get.snackbar("Success", "Tasks Created");
-    }
 
-  }
 
   void logout() {
     box.remove("token");

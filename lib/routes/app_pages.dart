@@ -1,4 +1,5 @@
 import 'package:dio_todo_list/routes/app_routes.dart';
+import 'package:dio_todo_list/screens/add_tasks_view.dart/add_tasks_view_dart_view.dart';
 import 'package:dio_todo_list/screens/homescreen/homescreen_view.dart';
 import 'package:dio_todo_list/screens/login_screen/login_screen_view.dart';
 import 'package:dio_todo_list/screens/register_screen/register_screen_view.dart';
@@ -20,6 +21,11 @@ class AppPages {
       name: AppRoutes.home,
       page: () => HomescreenView(),
       binding: HomescreenViewBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.addTask,
+      page: () => AddTasksViewDartView(),
+      binding: AddTasksViewDartViewBinding(),
     ),
   ];
 }

@@ -17,9 +17,10 @@ class HomescreenView extends GetView<HomescreenViewController> {
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.deepPurpleAccent,
+        foregroundColor: Colors.white,
         onPressed: () {
-          controller.createTasks();
-          controller.getTasks();
+          Get.toNamed(AppRoutes.addTask);
         },
         child: Icon(Icons.add),
       ),
