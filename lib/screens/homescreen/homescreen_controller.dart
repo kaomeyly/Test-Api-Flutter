@@ -22,15 +22,25 @@ class HomescreenViewController extends GetxController {
     debugPrint(response.toString());
   }
 
-  void getTasks() async {
-    var response = await taskSerive.fetchTasks();
+  var isLoadingTask = false.obs;
 
+  void getTasks() async {
+    isLoading.value = true;
+    var response = await taskSerive.fetchTasks();
+    isLoading.value = false;
     tasks.value = response["data"];
 
     debugPrint(response.toString());
   }
 
+  void deleteTask({required String id}) async {
+    var response = await taskSerive.deleteTask(id: id);
 
+    if (response["result"] == true) {
+      Get.snackbar("Success", "Delete successful");
+    }
+    
+  }
 
   void logout() {
     box.remove("token");

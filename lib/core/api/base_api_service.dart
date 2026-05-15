@@ -10,7 +10,7 @@ class BaseApiService {
   }) async {
     try {
       var response = await ApiConfig().dio.post(endpoint, data: data);
-      return response.data;
+      return response;
     } on DioException catch (e) {
       debugPrint("Error : ${e.message}");
     }
@@ -26,6 +26,27 @@ class BaseApiService {
         queryParameters: queryParameters,
       );
       return response.data;
+    } on DioException catch (e) {
+      debugPrint("Error : ${e.message}");
+    }
+  }
+
+  Future<dynamic> delete({required String endpoint}) async {
+    try {
+      var response = await apiConfig.dio.delete(endpoint);
+      return response;
+    } on DioException catch (e) {
+      debugPrint("Error ${e.toString()}");
+    }
+  }
+
+  Future<dynamic> put({
+    required String endpoint,
+    required Map<String, dynamic> data,
+  }) async {
+    try {
+      var response = await ApiConfig().dio.post(endpoint, data: data);
+      return response;
     } on DioException catch (e) {
       debugPrint("Error : ${e.message}");
     }

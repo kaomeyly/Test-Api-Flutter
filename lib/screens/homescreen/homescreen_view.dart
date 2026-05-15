@@ -20,39 +20,73 @@ class HomescreenView extends GetView<HomescreenViewController> {
         backgroundColor: Colors.deepPurpleAccent,
         foregroundColor: Colors.white,
         onPressed: () {
-          Get.toNamed(AppRoutes.addTask);
+          Get.toNamed(AppRoutes.addTask)!.then((value) {
+            controller.getTasks();
+          });
         },
         child: Icon(Icons.add),
       ),
       body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(20.0),
-          child: Column(
-            children: [
-              Obx(
-                () => controller.isLoading.value
-                    ? _buildProfilePlaceholder()
-                    : _buildProfileHeader(),
-              ),
-              Obx(
-                () => ListView.separated(
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      title: Text(controller.tasks[index]["name"]),
-                      subtitle: Text(controller.tasks[index]["description"]),
-                    );
-                  },
-                  separatorBuilder: (context, index) {
-                    return SizedBox(height: 10);
-                  },
-                  itemCount: controller.tasks.length,
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(20.0),
+            child: Column(
+              children: [
+                Obx(
+                  () => controller.isLoading.value
+                      ? _buildProfilePlaceholder()
+                      : _buildProfileHeader(),
                 ),
-              ),
-            ],
+                Obx(
+                  () => controller.isLoadingTask.value
+                      ? _buildTaskPlaceholder()
+                      : _buildTaskList(),
+                ),
+              ],
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildTaskPlaceholder() {
+    return ListView.separated(
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        return Shimmer.fromColors(
+          baseColor: Colors.grey.shade300,
+          highlightColor: Colors.grey.shade400,
+          child: Container(height: 50, width: 100, color: Colors.grey),
+        );
+      },
+      separatorBuilder: (context, index) {
+        return SizedBox(height: 10);
+      },
+      itemCount: 3,
+    );
+  }
+
+  Widget _buildTaskList() {
+    return ListView.separated(
+      physics: NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      itemBuilder: (context, index) {
+        return ListTile(
+          title: Text(controller.tasks[index]["name"]),
+          subtitle: Text(controller.tasks[index]["description"]),
+          trailing: GestureDetector(
+            onTap: () {
+              controller.deleteTask(id: controller.tasks[index]["id"]);
+            },
+            child: Icon(Icons.delete_outline),
+          ),
+        );
+      },
+      separatorBuilder: (context, index) {
+        return SizedBox(height: 10);
+      },
+      itemCount: controller.tasks.length,
     );
   }
 

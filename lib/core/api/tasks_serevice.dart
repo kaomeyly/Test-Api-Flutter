@@ -20,4 +20,10 @@ class TasksSerevice {
 
     return response;
   }
+
+  Future<Map<String, dynamic>> deleteTask({required String id}) async {
+    var response = await baseApiServie.delete(endpoint: "/api/tasks/$id");
+
+    return response;
+  }
 }
