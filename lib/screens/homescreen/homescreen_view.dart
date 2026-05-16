@@ -78,6 +78,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
           trailing: GestureDetector(
             onTap: () {
               controller.deleteTask(id: controller.tasks[index]["id"]);
+              controller.tasks.removeAt(index);
             },
             child: Icon(Icons.delete_outline),
           ),
