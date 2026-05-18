@@ -26,4 +26,17 @@ class TasksSerevice {
 
     return response;
   }
+
+  Future<Map<String, dynamic>> updateTask({
+    required String id,
+    required String name,
+    required String description,
+  }) async {
+    var response = await baseApiServie.put(
+      endpoint: "/api/tasks/$id",
+      data: {"name": name, "description": description},
+    );
+
+    return response;
+  }
 }

@@ -12,7 +12,9 @@ class AddTasksView extends GetView<AddTasksViewController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Add Task")),
+      appBar: AppBar(
+        title: Text(controller.args != null ? "Update Task" : "Add Task"),
+      ),
       body: Padding(
         padding: const EdgeInsets.all(10.0),
         child: Column(
@@ -36,7 +38,9 @@ class AddTasksView extends GetView<AddTasksViewController> {
             SizedBox(height: 20),
             GestureDetector(
               onTap: () {
-                controller.createTasks();
+                controller.args != null
+                    ? controller.updateTask()
+                    : controller.createTasks();
               },
               child: Container(
                 height: 50,
@@ -51,7 +55,9 @@ class AddTasksView extends GetView<AddTasksViewController> {
                     () => controller.isLoading.value
                         ? CircularProgressIndicator()
                         : Text(
-                            "Add Task",
+                            controller.args != null
+                                ? "Update Task"
+                                : "Add Task",
                             style: TextStyle(fontSize: 16, color: Colors.white),
                           ),
                   ),

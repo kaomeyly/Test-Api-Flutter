@@ -9,6 +9,7 @@ class HomescreenViewController extends GetxController {
   var taskSerive = TasksSerevice();
 
   var isLoading = false.obs;
+  var isdeleted = false.obs;
 
   void getProfile() async {
     isLoading.value = true;
@@ -33,13 +34,59 @@ class HomescreenViewController extends GetxController {
     debugPrint(response.toString());
   }
 
-  void deleteTask({required String id}) async {
-    var response = await taskSerive.deleteTask(id: id);
+  void deleteTask({required String id, required int index}) async {
+    isdeleted.value = true;
+    try {
+      var response = await taskSerive.deleteTask(id: id);
 
-    if (response["result"] == true) {
-      Get.snackbar("Success", "Delete successful");
+      debugPrint("Response $response");
+
+      if (response["result"] == true) {
+        // tasks.removeWhere((task) => task["id"] == id);
+        Get.snackbar("Success", "Delete successful");
+        isdeleted.value = false;
+        tasks.removeAt(index);
+      }
+    } catch (e) {
+      debugPrint("Task Delete error : ${e.toString()}");
+      isdeleted.value = false;
     }
-    
+  }
+
+  void onDeleteTask({required String id, required int index}) {
+    Get.dialog(
+      AlertDialog(
+        title: Text("Delete Task"),
+        content: Text("Are you sure to delete?"),
+        actions: [
+          ElevatedButton(
+            onPressed: () {
+              Get.back();
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.green,
+              foregroundColor: Colors.white,
+            ),
+            child: Text("No"),
+          ),
+          Obx(
+            () => ElevatedButton(
+              onPressed: () {
+                Get.back();
+                deleteTask(id: id, index: index);
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.red,
+                foregroundColor: Colors.white,
+              ),
+              child: isdeleted.value
+                  ? CircularProgressIndicator()
+                  : Text("Yes"),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   void logout() {

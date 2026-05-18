@@ -26,8 +26,8 @@ class AuthService {
     return response;
   }
 
-  Future <Map<String, dynamic>>fetchProfile() async{
+  Future<Map<String, dynamic>> fetchProfile() async {
     var response = await baseApi.get(endpoint: "/api/profile/me");
     return response;
-  } 
+  }
 }

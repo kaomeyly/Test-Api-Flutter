@@ -73,14 +73,33 @@ class HomescreenView extends GetView<HomescreenViewController> {
       shrinkWrap: true,
       itemBuilder: (context, index) {
         return ListTile(
-          title: Text(controller.tasks[index]["name"]),
-          subtitle: Text(controller.tasks[index]["description"]),
-          trailing: GestureDetector(
-            onTap: () {
-              controller.deleteTask(id: controller.tasks[index]["id"]);
-              controller.tasks.removeAt(index);
-            },
-            child: Icon(Icons.delete_outline),
+          title: Text(controller.tasks[index]["name"].toString()),
+          subtitle: Text(controller.tasks[index]["description"].toString()),
+          trailing: Row(
+            mainAxisSize: .min,
+            children: [
+              GestureDetector(
+                onTap: () {
+                  // controller.deleteTask(id: controller.tasks[index]["id"]);
+                  // controller.tasks.removeAt(index);
+                  controller.onDeleteTask(
+                    id: controller.tasks[index]["id"],
+                    index: index,
+                  );
+                },
+                child: Icon(Icons.delete_outline),
+              ),
+              SizedBox(width: 5),
+              GestureDetector(
+                onTap: () {
+                  Get.toNamed(
+                    AppRoutes.addTask,
+                    arguments: controller.tasks[index],
+                  );
+                },
+                child: Icon(Icons.edit),
+              ),
+            ],
           ),
         );
       },
