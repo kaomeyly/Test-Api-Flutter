@@ -94,6 +94,14 @@ class HomescreenViewController extends GetxController {
     Get.offAllNamed(AppRoutes.login);
   }
 
+  String formatDateTime(String date) {
+    var formatString = DateTime.parse(date);
+
+    var formatedDate = DateFormat("dd MMM yyyy").format(formatString);
+
+    return formatedDate;
+  }
+
   @override
   void onInit() {
     super.onInit();

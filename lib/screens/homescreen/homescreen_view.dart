@@ -5,6 +5,8 @@ import 'package:dio_todo_list/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 import 'package:shimmer/shimmer.dart';
 
 part 'homescreen_binding.dart';
@@ -37,6 +39,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
                       ? _buildProfilePlaceholder()
                       : _buildProfileHeader(),
                 ),
+                SizedBox(height: 20),
                 Obx(
                   () => controller.isLoadingTask.value
                       ? _buildTaskPlaceholder()
@@ -51,7 +54,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
   }
 
   Widget _buildTaskPlaceholder() {
-    return ListView.separated(
+    return ListView.builder(
       shrinkWrap: true,
       itemBuilder: (context, index) {
         return Shimmer.fromColors(
@@ -60,9 +63,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
           child: Container(height: 50, width: 100, color: Colors.grey),
         );
       },
-      separatorBuilder: (context, index) {
-        return SizedBox(height: 10);
-      },
+
       itemCount: 3,
     );
   }
@@ -72,41 +73,91 @@ class HomescreenView extends GetView<HomescreenViewController> {
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemBuilder: (context, index) {
-        return ListTile(
-          title: Text(controller.tasks[index]["name"].toString()),
-          subtitle: Text(controller.tasks[index]["description"].toString()),
-          trailing: Row(
-            mainAxisSize: .min,
+        return _taskCard(index: index);
+      },
+      separatorBuilder: (context, index) {
+        return SizedBox(height: 20);
+      },
+      itemCount: controller.tasks.length,
+    );
+  }
+
+  Widget _taskCard({required int index}) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+      decoration: BoxDecoration(
+        // color: Color(0xFFD9D9D9).withValues(alpha: .5),
+        color: Colors.grey.shade400,
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: Column(
+        crossAxisAlignment: .start,
+        children: [
+          Row(
             children: [
-              GestureDetector(
-                onTap: () {
-                  // controller.deleteTask(id: controller.tasks[index]["id"]);
-                  // controller.tasks.removeAt(index);
-                  controller.onDeleteTask(
-                    id: controller.tasks[index]["id"],
-                    index: index,
-                  );
-                },
-                child: Icon(Icons.delete_outline),
+              Container(
+                height: 45,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: Text(
+                  "Hight Priority",
+                  style: GoogleFonts.spaceGrotesk(fontWeight: .bold),
+                ),
               ),
-              SizedBox(width: 5),
-              GestureDetector(
-                onTap: () {
-                  Get.toNamed(
-                    AppRoutes.addTask,
-                    arguments: controller.tasks[index],
-                  );
-                },
-                child: Icon(Icons.edit),
+              Spacer(),
+              Container(
+                height: 45,
+                width: 45,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30),
+                  color: Colors.grey.shade500,
+                ),
+                child: Icon(Icons.more_horiz, color: Colors.black),
               ),
             ],
           ),
-        );
-      },
-      separatorBuilder: (context, index) {
-        return SizedBox(height: 10);
-      },
-      itemCount: controller.tasks.length,
+          SizedBox(height: 20),
+          Text(
+            controller.tasks[index]["name"].toUpperCase(),
+            style: GoogleFonts.spaceGrotesk(fontSize: 25, fontWeight: .bold),
+          ),
+          Text(
+            controller.tasks[index]["description"],
+            style: GoogleFonts.spaceGrotesk(fontSize: 15, fontWeight: .normal),
+          ),
+          SizedBox(height: 20),
+          Row(
+            children: [
+              Text(
+                // DateFormat(
+                //   'dd MMMM yyyy',
+                // ).format(DateTime.parse(controller.tasks[index]["created_at"])),
+                "Date : ${controller.formatDateTime(controller.tasks[index]["created_at"])}",
+                style: GoogleFonts.spaceGrotesk(
+                  fontSize: 15,
+                  fontWeight: .normal,
+                ),
+              ),
+              Spacer(),
+              Container(
+                height: 45,
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: Text(
+                  "Mark as Done",
+                  style: GoogleFonts.spaceGrotesk(fontWeight: .bold),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 
