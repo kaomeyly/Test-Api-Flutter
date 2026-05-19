@@ -108,14 +108,55 @@ class HomescreenView extends GetView<HomescreenViewController> {
                 ),
               ),
               Spacer(),
-              Container(
-                height: 45,
-                width: 45,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(30),
-                  color: Colors.grey.shade500,
+              PopupMenuButton(
+                position: PopupMenuPosition.under,
+                color: Colors.white,
+
+                itemBuilder: (context) {
+                  return [
+                    PopupMenuItem(
+                      onTap: () {
+                        controller.onDeleteTask(
+                          id: controller.tasks[index]["id"],
+                          index: index,
+                        );
+                      },
+                      child: Row(
+                        children: [
+                          Icon(Icons.delete, color: Colors.red),
+                          SizedBox(width: 5),
+                          Text("Delete", style: TextStyle(color: Colors.red)),
+                        ],
+                      ),
+                    ),
+                    PopupMenuItem(
+                      onTap: () {
+                        Get.toNamed(
+                          AppRoutes.addTask,
+                          arguments: controller.tasks[index],
+                        )!.then((value) {
+                          controller.getTasks();
+                        });
+                      },
+                      child: Row(
+                        children: [
+                          Icon(Icons.edit, color: Colors.green),
+                          SizedBox(width: 5),
+                          Text("Update", style: TextStyle(color: Colors.green)),
+                        ],
+                      ),
+                    ),
+                  ];
+                },
+                child: Container(
+                  height: 45,
+                  width: 45,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(30),
+                    color: Colors.grey.shade500,
+                  ),
+                  child: Icon(Icons.more_horiz, color: Colors.white),
                 ),
-                child: Icon(Icons.more_horiz, color: Colors.black),
               ),
             ],
           ),

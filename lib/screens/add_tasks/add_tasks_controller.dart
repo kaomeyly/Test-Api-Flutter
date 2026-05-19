@@ -7,6 +7,8 @@ class AddTasksViewController extends GetxController {
 
   var isLoading = false.obs;
 
+  var nameFocus = FocusNode();
+
   var args = Get.arguments;
 
   void createTasks() async {
@@ -18,6 +20,8 @@ class AddTasksViewController extends GetxController {
       );
       isLoading.value = false;
       if (response["result"] == true) {
+        nameFocus.requestFocus();
+
         Get.snackbar("Success", "Tasks Created");
         nameCtrl.clear();
         desCtrl.clear();
@@ -38,6 +42,7 @@ class AddTasksViewController extends GetxController {
         );
 
         if (response["result"] == true) {
+          Get.back();
           Get.snackbar("Success", "Tasks Update");
           isLoading.value = false;
           // nameCtrl.clear();

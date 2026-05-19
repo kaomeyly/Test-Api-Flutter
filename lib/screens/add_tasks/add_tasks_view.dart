@@ -26,18 +26,21 @@ class AddTasksView extends GetView<AddTasksViewController> {
             ),
             SizedBox(height: 10),
             customtextfield(
-              hintText: "Enter task name",
               controller: controller.nameCtrl,
+              hintText: "Enter task name",
+              focusNode: controller.nameFocus,
             ),
             SizedBox(height: 10),
             customtextfield(
               hintText: "Enter task description",
               controller: controller.desCtrl,
               isMultiline: true,
+              
             ),
             SizedBox(height: 20),
             GestureDetector(
               onTap: () {
+                FocusScope.of(Get.context!).unfocus();
                 controller.args != null
                     ? controller.updateTask()
                     : controller.createTasks();
