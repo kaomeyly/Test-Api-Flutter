@@ -42,7 +42,7 @@ class BaseApiService {
 
   Future<dynamic> put({
     required String endpoint,
-    required Map<String, dynamic> data,
+    Map<String, dynamic>? data,
   }) async {
     try {
       var response = await ApiConfig().dio.put(endpoint, data: data);

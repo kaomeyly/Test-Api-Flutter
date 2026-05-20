@@ -39,4 +39,20 @@ class TasksSerevice {
 
     return response;
   }
+
+  Future<Map<String, dynamic>> markComplete({required String id}) async {
+    var response = await baseApiServie.put(
+      endpoint: "/api/tasks/mark-completed/$id",
+    );
+
+    return response;
+  }
+
+  Future<Map<String, dynamic>> unmarkComplete({required String id}) async {
+    var response = await baseApiServie.put(
+      endpoint: "/api/tasks/unmark-completed/$id",
+    );
+
+    return response;
+  }
 }

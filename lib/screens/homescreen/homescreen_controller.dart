@@ -6,10 +6,13 @@ class HomescreenViewController extends GetxController {
 
   late UserModel user;
   var tasks = [].obs;
+  var completedTasksID = "".obs;
   var taskSerive = TasksSerevice();
 
   var isLoading = false.obs;
   var isdeleted = false.obs;
+  var isLoadingTask = false.obs;
+  var isCompleted = false.obs;
 
   void getProfile() async {
     isLoading.value = true;
@@ -22,8 +25,6 @@ class HomescreenViewController extends GetxController {
 
     debugPrint(response.toString());
   }
-
-  var isLoadingTask = false.obs;
 
   void getTasks() async {
     isLoading.value = true;
@@ -100,6 +101,52 @@ class HomescreenViewController extends GetxController {
     var formatedDate = DateFormat("dd MMM yyyy").format(formatString);
 
     return formatedDate;
+  }
+
+  void markCompleteTask({required String id, required int index}) async {
+    try {
+      isCompleted.value = true;
+      completedTasksID.value = id;
+      var response = await taskSerive.markComplete(id: id);
+
+      if (response["result"] == true) {
+        tasks[index]["completed"] = true;
+        isCompleted.value = false;
+        Get.snackbar("Success", "Task is Complete");
+      }
+    } catch (e) {
+      tasks[index]["completed"] = false;
+      isCompleted.value = false;
+      Get.snackbar("Failed", "Task is failed");
+      debugPrint("Error ${e.toString()}");
+    }
+  }
+
+  void unmarkCompleteTask({required String id, required int index}) async {
+    try {
+      isCompleted.value = true;
+      completedTasksID.value = id;
+      var response = await taskSerive.markComplete(id: id);
+
+      if (response["result"] == true) {
+        tasks[index]["completed"] = false;
+        isCompleted.value = false;
+        Get.snackbar("Success", "Task is Complete");
+      }
+    } catch (e) {
+      tasks[index]["completed"] = true;
+      isCompleted.value = false;
+      Get.snackbar("Failed", "Task is failed");
+      debugPrint("Error ${e.toString()}");
+    }
+  }
+
+  void toggleMarkComplete({required String id, required int index}) {
+    if (tasks[index]["completed"]) {
+      unmarkCompleteTask(id: id, index: index);
+    } else {
+      markCompleteTask(id: id, index: index);
+    }
   }
 
   @override

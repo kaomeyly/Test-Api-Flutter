@@ -1,3 +1,4 @@
+import 'package:contentsize_tabbarview/contentsize_tabbarview.dart';
 import 'package:dio_todo_list/core/api/auth_service.dart';
 import 'package:dio_todo_list/core/api/tasks_serevice.dart';
 import 'package:dio_todo_list/models/user_model.dart';
@@ -28,24 +29,41 @@ class HomescreenView extends GetView<HomescreenViewController> {
         },
         child: Icon(Icons.add),
       ),
-      body: SafeArea(
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(20.0),
-            child: Column(
-              children: [
-                Obx(
-                  () => controller.isLoading.value
-                      ? _buildProfilePlaceholder()
-                      : _buildProfileHeader(),
-                ),
-                SizedBox(height: 20),
-                Obx(
-                  () => controller.isLoadingTask.value
-                      ? _buildTaskPlaceholder()
-                      : _buildTaskList(),
-                ),
-              ],
+      body: DefaultTabController(
+        length: 2,
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: const EdgeInsets.all(20.0),
+              child: Column(
+                children: [
+                  Obx(
+                    () => controller.isLoading.value
+                        ? _buildProfilePlaceholder()
+                        : _buildProfileHeader(),
+                  ),
+                  SizedBox(height: 20),
+
+                  TabBar(
+                    tabs: [
+                      Tab(text: "Board"),
+                      Tab(text: "Done"),
+                    ],
+                  ),
+                  SizedBox(height: 20),
+                  ContentSizeTabBarView(
+                    children: [
+                      Obx(
+                        () => controller.isLoadingTask.value
+                            ? _buildTaskPlaceholder()
+                            : _buildTaskList(),
+                      ),
+
+                      Container(),
+                    ],
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -111,7 +129,6 @@ class HomescreenView extends GetView<HomescreenViewController> {
               PopupMenuButton(
                 position: PopupMenuPosition.under,
                 color: Colors.white,
-
                 itemBuilder: (context) {
                   return [
                     PopupMenuItem(
@@ -183,16 +200,33 @@ class HomescreenView extends GetView<HomescreenViewController> {
                 ),
               ),
               Spacer(),
-              Container(
-                height: 45,
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(50),
-                ),
-                child: Text(
-                  "Mark as Done",
-                  style: GoogleFonts.spaceGrotesk(fontWeight: .bold),
+              GestureDetector(
+                onTap: () {
+                  controller.toggleMarkComplete(
+                    id: controller.tasks[index]["id"],
+                    index: index,
+                  );
+                },
+                child: Obx(
+                  () => Container(
+                    height: 45,
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                    child:
+                        controller.isCompleted.value &&
+                            controller.completedTasksID ==
+                                controller.tasks[index]["id"]
+                        ? CircularProgressIndicator()
+                        : Text(
+                            controller.tasks[index]["completed"]
+                                ? "Done"
+                                : "Mark as Done",
+                            style: GoogleFonts.spaceGrotesk(fontWeight: .bold),
+                          ),
+                  ),
                 ),
               ),
             ],

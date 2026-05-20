@@ -7,6 +7,8 @@ environment:
   sdk: ^3.11.5
 
 dependencies:
+  autoscale_tabbarview: ^1.0.2
+  contentsize_tabbarview: ^0.0.2
   datetime_picker_formfield_new: ^2.1.0
   datetime_utils: ^1.0.1
   dio: ^5.9.2
