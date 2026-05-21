@@ -47,7 +47,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
                   TabBar(
                     tabs: [
                       Tab(text: "Board"),
-                      Tab(text: "Done"),
+                      Tab(text: "Done."),
                     ],
                   ),
                   SizedBox(height: 20),

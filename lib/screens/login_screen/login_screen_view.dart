@@ -63,7 +63,7 @@ class LoginScreenView extends GetView<LoginScreenController> {
                   Text("Don't have an account?"),
                   SizedBox(width: 5),
                   Text(
-                    "Sign up!",
+                    "Sign up!!",
                     style: TextStyle(decoration: TextDecoration.underline),
                   ),
                 ],
