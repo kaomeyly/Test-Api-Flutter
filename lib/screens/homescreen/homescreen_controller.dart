@@ -115,7 +115,6 @@ class HomescreenViewController extends GetxController {
     }
   }
 
-  
   void unmarkCompleteTask({required String id, required int index}) async {
     try {
       isCompleted.value = true;
@@ -134,7 +133,7 @@ class HomescreenViewController extends GetxController {
   }
 
   void toggleMarkComplete({required String id}) {
-    int freshIndex = tasks.indexWhere((t) => t["id"] == id);
+    int freshIndex = tasks.indexWhere((element) => element["id"] == id);
     if (freshIndex == -1) return;
 
     if (tasks[freshIndex]["completed"]) {
