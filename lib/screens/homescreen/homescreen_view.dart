@@ -43,11 +43,10 @@ class HomescreenView extends GetView<HomescreenViewController> {
                         : _buildProfileHeader(),
                   ),
                   SizedBox(height: 20),
-
                   TabBar(
                     tabs: [
                       Tab(text: "Board"),
-                      Tab(text: "Done."),
+                      Tab(text: "Done"),
                     ],
                   ),
                   SizedBox(height: 20),
@@ -56,10 +55,13 @@ class HomescreenView extends GetView<HomescreenViewController> {
                       Obx(
                         () => controller.isLoadingTask.value
                             ? _buildTaskPlaceholder()
-                            : _buildTaskList(),
+                            : _buildTaskList(tasks: controller.boradList),
                       ),
-
-                      Container(),
+                      Obx(
+                        () => controller.isLoadingTask.value
+                            ? _buildTaskPlaceholder()
+                            : _buildTaskList(tasks: controller.doneList),
+                      ),
                     ],
                   ),
                 ],
@@ -81,35 +83,33 @@ class HomescreenView extends GetView<HomescreenViewController> {
           child: Container(height: 50, width: 100, color: Colors.grey),
         );
       },
-
       itemCount: 3,
     );
   }
 
-  Widget _buildTaskList() {
+  Widget _buildTaskList({required List<dynamic> tasks}) {
     return ListView.separated(
       physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemBuilder: (context, index) {
-        return _taskCard(index: index);
+        return _taskCard(task: tasks[index]);
       },
       separatorBuilder: (context, index) {
         return SizedBox(height: 20);
       },
-      itemCount: controller.tasks.length,
+      itemCount: tasks.length,
     );
   }
 
-  Widget _taskCard({required int index}) {
+  Widget _taskCard({required dynamic task}) {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       decoration: BoxDecoration(
-        // color: Color(0xFFD9D9D9).withValues(alpha: .5),
         color: Colors.grey.shade400,
         borderRadius: BorderRadius.circular(30),
       ),
       child: Column(
-        crossAxisAlignment: .start,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Row(
             children: [
@@ -121,8 +121,8 @@ class HomescreenView extends GetView<HomescreenViewController> {
                   borderRadius: BorderRadius.circular(50),
                 ),
                 child: Text(
-                  "Hight Priority",
-                  style: GoogleFonts.spaceGrotesk(fontWeight: .bold),
+                  "High Priority",
+                  style: GoogleFonts.spaceGrotesk(fontWeight: FontWeight.bold),
                 ),
               ),
               Spacer(),
@@ -133,10 +133,10 @@ class HomescreenView extends GetView<HomescreenViewController> {
                   return [
                     PopupMenuItem(
                       onTap: () {
-                        controller.onDeleteTask(
-                          id: controller.tasks[index]["id"],
-                          index: index,
+                        int index = controller.tasks.indexWhere(
+                          (t) => t["id"] == task["id"],
                         );
+                        controller.onDeleteTask(id: task["id"], index: index);
                       },
                       child: Row(
                         children: [
@@ -148,10 +148,9 @@ class HomescreenView extends GetView<HomescreenViewController> {
                     ),
                     PopupMenuItem(
                       onTap: () {
-                        Get.toNamed(
-                          AppRoutes.addTask,
-                          arguments: controller.tasks[index],
-                        )!.then((value) {
+                        Get.toNamed(AppRoutes.addTask, arguments: task)!.then((
+                          value,
+                        ) {
                           controller.getTasks();
                         });
                       },
@@ -179,36 +178,40 @@ class HomescreenView extends GetView<HomescreenViewController> {
           ),
           SizedBox(height: 20),
           Text(
-            controller.tasks[index]["name"].toUpperCase(),
-            style: GoogleFonts.spaceGrotesk(fontSize: 25, fontWeight: .bold),
+            task["name"].toUpperCase(),
+            style: GoogleFonts.spaceGrotesk(
+              fontSize: 25,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           Text(
-            controller.tasks[index]["description"],
-            style: GoogleFonts.spaceGrotesk(fontSize: 15, fontWeight: .normal),
+            task["description"],
+            style: GoogleFonts.spaceGrotesk(
+              fontSize: 15,
+              fontWeight: FontWeight.normal,
+            ),
           ),
           SizedBox(height: 20),
           Row(
             children: [
               Text(
-                // DateFormat(
-                //   'dd MMMM yyyy',
-                // ).format(DateTime.parse(controller.tasks[index]["created_at"])),
-                "Date : ${controller.formatDateTime(controller.tasks[index]["created_at"])}",
+                "Date : ${controller.formatDateTime(task["created_at"])}",
                 style: GoogleFonts.spaceGrotesk(
                   fontSize: 15,
-                  fontWeight: .normal,
+                  fontWeight: FontWeight.normal,
                 ),
               ),
               Spacer(),
               GestureDetector(
                 onTap: () {
-                  controller.toggleMarkComplete(
-                    id: controller.tasks[index]["id"],
-                    index: index,
-                  );
+                  controller.toggleMarkComplete(id: task["id"]);
                 },
-                child: Obx(
-                  () => Container(
+                child: Obx(() {
+                  final isInBoard = controller.boradList.any(
+                    (t) => t["id"] == task["id"],
+                  );
+
+                  return Container(
                     height: 45,
                     padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                     decoration: BoxDecoration(
@@ -217,17 +220,16 @@ class HomescreenView extends GetView<HomescreenViewController> {
                     ),
                     child:
                         controller.isCompleted.value &&
-                            controller.completedTasksID ==
-                                controller.tasks[index]["id"]
+                            controller.completedTasksID.value == task["id"]
                         ? CircularProgressIndicator()
                         : Text(
-                            controller.tasks[index]["completed"]
-                                ? "Done"
-                                : "Mark as Done",
-                            style: GoogleFonts.spaceGrotesk(fontWeight: .bold),
+                            isInBoard ? "Mark as Done" : "Done",
+                            style: GoogleFonts.spaceGrotesk(
+                              fontWeight: FontWeight.bold,
+                            ),
                           ),
-                  ),
-                ),
+                  );
+                }),
               ),
             ],
           ),
@@ -245,16 +247,23 @@ class HomescreenView extends GetView<HomescreenViewController> {
         ),
         SizedBox(width: 10),
         Column(
-          crossAxisAlignment: .start,
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
               controller.user.name,
-              style: TextStyle(fontSize: 20, fontWeight: .bold, height: 1.2),
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                height: 1.2,
+              ),
             ),
-
             Text(
               controller.user.email,
-              style: TextStyle(fontSize: 13, fontWeight: .normal, height: 1.2),
+              style: TextStyle(
+                fontSize: 13,
+                fontWeight: FontWeight.normal,
+                height: 1.2,
+              ),
             ),
           ],
         ),
