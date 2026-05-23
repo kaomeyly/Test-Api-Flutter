@@ -64,6 +64,12 @@ class HomescreenView extends GetView<HomescreenViewController> {
                       ),
                     ],
                   ),
+                  // ElevatedButton(
+                  //   onPressed: () {
+                  //     controller.logout();
+                  //   },
+                  //   child: Text("Logout"),
+                  // ),
                 ],
               ),
             ),
