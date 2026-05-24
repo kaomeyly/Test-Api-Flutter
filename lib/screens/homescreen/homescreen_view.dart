@@ -182,7 +182,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
               ),
             ],
           ),
-          SizedBox(height: 20),
+          SizedBox(height: 30),
           Text(
             task["name"].toUpperCase(),
             style: GoogleFonts.spaceGrotesk(
