@@ -36,7 +36,7 @@ class RegisterScreenView extends GetView<RegisterScreenViewController> {
               hintText: "Enter Password",
               controller: controller.passwordCtrl,
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 20),
             GestureDetector(
               onTap: () {
                 controller.register();

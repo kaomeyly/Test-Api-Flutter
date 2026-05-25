@@ -17,6 +17,9 @@ class HomescreenViewController extends GetxController {
   var doneList = [].obs;
   var boradList = [].obs;
 
+  int get boardCount => boradList.length;
+  int get doneCount => doneList.length;
+
   void getProfile() async {
     isLoading.value = true;
     var response = await authService.fetchProfile();

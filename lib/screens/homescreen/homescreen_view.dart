@@ -45,8 +45,36 @@ class HomescreenView extends GetView<HomescreenViewController> {
                   SizedBox(height: 20),
                   TabBar(
                     tabs: [
-                      Tab(text: "Board"),
-                      Tab(text: "Done"),
+                      Obx(
+                        () => Tab(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Board"),
+                              SizedBox(width: 8),
+                              _buildCountBadge(
+                                controller.boardCount,
+                                Colors.red,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      Obx(
+                        () => Tab(
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text("Done"),
+                              SizedBox(width: 8),
+                              _buildCountBadge(
+                                controller.doneCount,
+                                Colors.green,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                   SizedBox(height: 20),
@@ -74,6 +102,24 @@ class HomescreenView extends GetView<HomescreenViewController> {
               ),
             ),
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCountBadge(int count, Color color) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+      decoration: BoxDecoration(
+        color: color,
+        borderRadius: BorderRadius.circular(20),
+      ),
+      child: Text(
+        "$count",
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: 12,
+          fontWeight: FontWeight.bold,
         ),
       ),
     );

@@ -52,7 +52,7 @@ class LoginScreenView extends GetView<LoginScreenController> {
                 ),
               ),
             ),
-            SizedBox(height: 30),
+            SizedBox(height: 20),
             GestureDetector(
               onTap: () {
                 Get.toNamed(AppRoutes.register);
