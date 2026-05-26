@@ -45,7 +45,7 @@ class LoginScreenView extends GetView<LoginScreenController> {
                     child: controller.isLoading.value
                         ? CircularProgressIndicator()
                         : Text(
-                            "Login",
+                            "Login!!",
                             style: TextStyle(fontSize: 20, color: Colors.white),
                           ),
                   ),
