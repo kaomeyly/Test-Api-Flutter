@@ -1,5 +1,5 @@
 import 'package:dio_todo_list/routes/app_pages.dart';
-import 'package:dio_todo_list/routes/app_routes.dart';
+import 'package:dio_todo_list/screens/spash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:get_storage/get_storage.dart';
@@ -39,7 +39,8 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: token != null ? AppRoutes.home : AppRoutes.login,
+      // initialRoute: token != null ? AppRoutes.home : AppRoutes.login,
+      home: SpashScreen(),
       getPages: AppPages.getPages,
     );
   }

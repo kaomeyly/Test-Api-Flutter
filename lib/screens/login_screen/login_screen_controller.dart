@@ -7,6 +7,26 @@ class LoginScreenController extends GetxController {
   var authService = AuthService();
   var isLoading = false.obs;
   var box = GetStorage();
+  RxBool rememberMe = false.obs;
+
+  @override
+  void onInit() {
+    super.onInit();
+    loadRememberMe();
+  }
+
+  void toggleRememberMe(bool? value) {
+    rememberMe.value = value!;
+  }
+
+  void loadRememberMe() {
+    bool saved = box.read('remember_me') ?? false;
+    rememberMe.value = saved;
+    if (saved) {
+      emailCtrl.text = box.read('email') ?? '';
+      passwordCtrl.text = box.read('password') ?? '';
+    }
+  }
 
   void login() async {
     try {
@@ -17,11 +37,21 @@ class LoginScreenController extends GetxController {
       );
 
       if (response["result"] == true) {
+        if (rememberMe.value) {
+          box.write('remember_me', true);
+          box.write('email', emailCtrl.text);
+          box.write('password', passwordCtrl.text);
+        } else {
+          box.remove('remember_me');
+          box.remove('email');
+          box.remove('password');
+        }
+
+        box.write("token", response["data"]["token"]);
         Get.snackbar("Success", "Login success");
         isLoading.value = false;
         Get.offAllNamed(AppRoutes.home);
         debugPrint("Token : ${response["data"]["token"]}");
-        box.write("token", response["data"]["token"]);
       } else {
         Get.snackbar("Failed", "Login Failed");
         isLoading.value = false;
