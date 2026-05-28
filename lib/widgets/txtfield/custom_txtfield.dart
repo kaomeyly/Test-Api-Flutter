@@ -44,7 +44,8 @@ class customtextfield extends StatelessWidget {
   final TextEditingController controller;
   final bool isMultiline;
   final FocusNode? focusNode;
-  final Icon? icon;
+  final Widget? icon;
+  final bool obscureText;
 
   const customtextfield({
     super.key,
@@ -52,6 +53,7 @@ class customtextfield extends StatelessWidget {
     required this.controller,
     this.isMultiline = false,
     this.focusNode,
+    this.obscureText = false,
     this.icon,
   });
 
@@ -59,8 +61,9 @@ class customtextfield extends StatelessWidget {
   Widget build(BuildContext context) {
     return TextField(
       controller: controller,
+      obscureText: obscureText,
       focusNode: focusNode,
-      minLines: isMultiline ? 5 : 1,
+      minLines: isMultiline ? 3 : 1,
       maxLines: isMultiline ? 10 : 1,
       decoration: InputDecoration(
         hintText: hintText,

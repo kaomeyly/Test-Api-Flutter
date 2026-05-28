@@ -44,17 +44,41 @@ class HomescreenView extends GetView<HomescreenViewController> {
                   ),
                   SizedBox(height: 20),
                   TabBar(
+                    indicatorColor: Colors.black,
+                    indicatorWeight: 2,
+                    labelColor: Colors.black,
+                    unselectedLabelColor: Colors.grey,
                     tabs: [
                       Obx(
                         () => Tab(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("Board"),
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 3,
+                                ),
+                                decoration: BoxDecoration(
+                                  color: Colors.black,
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Text(
+                                  "${controller.boardCount}",
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
                               SizedBox(width: 8),
-                              _buildCountBadge(
-                                controller.boardCount,
-                                Colors.red,
+                              Text(
+                                "Tasks",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             ],
                           ),
@@ -65,11 +89,34 @@ class HomescreenView extends GetView<HomescreenViewController> {
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text("Done"),
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 3,
+                                ),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.grey.shade400,
+                                    width: 1.5,
+                                  ),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Text(
+                                  "${controller.doneCount}",
+                                  style: TextStyle(
+                                    color: Colors.grey.shade600,
+                                    fontSize: 11,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
                               SizedBox(width: 8),
-                              _buildCountBadge(
-                                controller.doneCount,
-                                Colors.green,
+                              Text(
+                                "Done",
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             ],
                           ),
@@ -102,24 +149,6 @@ class HomescreenView extends GetView<HomescreenViewController> {
               ),
             ),
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildCountBadge(int count, Color color) {
-    return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Text(
-        "$count",
-        style: TextStyle(
-          color: Colors.white,
-          fontSize: 12,
-          fontWeight: FontWeight.bold,
         ),
       ),
     );
@@ -318,6 +347,14 @@ class HomescreenView extends GetView<HomescreenViewController> {
               ),
             ),
           ],
+        ),
+        Spacer(),
+        IconButton(
+          icon: Icon(
+            Icons.settings,
+            color: const Color.fromARGB(255, 27, 25, 25),
+          ),
+          onPressed: () {},
         ),
       ],
     );

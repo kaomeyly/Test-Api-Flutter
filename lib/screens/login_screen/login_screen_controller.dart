@@ -8,6 +8,7 @@ class LoginScreenController extends GetxController {
   var isLoading = false.obs;
   var box = GetStorage();
   RxBool rememberMe = false.obs;
+  RxBool obscurePassword = true.obs;
 
   @override
   void onInit() {
@@ -17,6 +18,10 @@ class LoginScreenController extends GetxController {
 
   void toggleRememberMe(bool? value) {
     rememberMe.value = value!;
+  }
+
+  void togglePasswordVisibility() {
+    obscurePassword.value = !obscurePassword.value;
   }
 
   void loadRememberMe() {

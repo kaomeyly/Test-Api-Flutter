@@ -34,7 +34,7 @@ class _SpashScreenState extends State<SpashScreen>
 
     _animationController.forward();
 
-    Future.delayed(const Duration(seconds: 4), () {
+    Future.delayed(const Duration(seconds: 5), () {
       if (mounted) {
         Get.offAllNamed(AppRoutes.login);
       }
@@ -60,9 +60,9 @@ class _SpashScreenState extends State<SpashScreen>
                 scale: _scaleAnimation,
                 child: Image.asset(
                   "assets/img/logo.png",
-                  fit: BoxFit.cover,
-                  width: 150,
-                  height: 150,
+                  width: 100,
+                  height: 100,
+                  fit: BoxFit.contain,
                 ),
               ),
             );

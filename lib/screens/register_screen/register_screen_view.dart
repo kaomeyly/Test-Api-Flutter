@@ -46,17 +46,42 @@ class RegisterScreenView extends GetView<RegisterScreenViewController> {
               controller: controller.emailCtrl,
             ),
             SizedBox(height: 20),
-            customtextfield(
-              hintText: "Enter Password",
-              controller: controller.passwordCtrl,
-              icon: Icon(Icons.remove_red_eye),
+            Obx(
+              () => customtextfield(
+                hintText: "Enter Password",
+                controller: controller.passwordCtrl,
+                obscureText: controller.obscurePassword.value,
+                icon: GestureDetector(
+                  onTap: controller.togglePasswordVisibility,
+                  child: Icon(
+                    controller.obscurePassword.value
+                        ? Icons.visibility_off
+                        : Icons.visibility,
+                  ),
+                ),
+              ),
             ),
             SizedBox(height: 20),
-            customtextfield(
-              hintText: "Confirm password",
-              controller: controller.passwordCtrl,
-              icon: Icon(Icons.remove_red_eye),
+           
+            Obx(
+              () => customtextfield(
+                hintText: "Confirm password",
+                controller:
+                    controller.confirmPasswordCtrl, 
+                obscureText: controller.obscureConfirmPassword.value,
+                icon: GestureDetector(
+                  onTap: controller.toggleConfirmPasswordVisibility,
+                  child: Icon(
+                    controller
+                            .obscureConfirmPassword
+                            .value
+                        ? Icons.visibility_off
+                        : Icons.visibility,
+                  ),
+                ),
+              ),
             ),
+
             SizedBox(height: 10),
             GestureDetector(
               onTap: () {
@@ -167,7 +192,7 @@ class RegisterScreenView extends GetView<RegisterScreenViewController> {
               children: [
                 GestureDetector(
                   onTap: () {
-                    Get.toNamed(AppRoutes.register);
+                    Get.toNamed(AppRoutes.login);
                   },
                   child: Row(
                     mainAxisAlignment: .center,

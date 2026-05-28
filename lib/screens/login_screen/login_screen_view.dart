@@ -18,7 +18,10 @@ class LoginScreenView extends GetView<LoginScreenController> {
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         leading: Column(
-          children: [SizedBox(height: 30), Image.asset("assets/img/logo.png")],
+          children: [
+            SizedBox(height: 20),
+            Image.asset("assets/img/logo.png", height: 30, width: 30),
+          ],
         ),
       ),
       body: Padding(
@@ -40,10 +43,20 @@ class LoginScreenView extends GetView<LoginScreenController> {
               controller: controller.emailCtrl,
             ),
             SizedBox(height: 20),
-            customtextfield(
-              hintText: "Enter Password",
-              controller: controller.passwordCtrl,
-              icon: Icon(Icons.remove_red_eye),
+            Obx(
+              () => customtextfield(
+                hintText: "Enter Password",
+                controller: controller.passwordCtrl,
+                obscureText: controller.obscurePassword.value,
+                icon: GestureDetector(
+                  onTap: controller.togglePasswordVisibility,
+                  child: Icon(
+                    controller.obscurePassword.value
+                        ? Icons.visibility_off
+                        : Icons.visibility,
+                  ),
+                ),
+              ),
             ),
             SizedBox(height: 10),
             Obx(
@@ -69,7 +82,7 @@ class LoginScreenView extends GetView<LoginScreenController> {
                 ],
               ),
             ),
-            SizedBox(height: 40),
+            SizedBox(height: 10),
             // Continue Button
             GestureDetector(
               onTap: () {

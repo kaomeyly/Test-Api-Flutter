@@ -21,23 +21,46 @@ class AddTasksView extends GetView<AddTasksViewController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Add Task",
+              "ADD TASKS",
               style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
             ),
-            SizedBox(height: 10),
+            Text(
+              "Turn Khmer documents, images, and PDFs into editable text instantly.",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
+            ),
+            SizedBox(height: 30),
+            Text(
+              "Title",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 3),
             customtextfield(
               controller: controller.nameCtrl,
               hintText: "Enter task name",
               focusNode: controller.nameFocus,
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 15),
+            Text(
+              "Description",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 3),
             customtextfield(
               hintText: "Enter task description",
               controller: controller.desCtrl,
               isMultiline: true,
-              
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 10),
+            Text(
+              "Priority",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 3),
+            customtextfield(
+              hintText: "Select task priority",
+              controller: controller.desCtrl,
+            ),
+            Spacer(),
             GestureDetector(
               onTap: () {
                 FocusScope.of(Get.context!).unfocus();
@@ -51,18 +74,43 @@ class AddTasksView extends GetView<AddTasksViewController> {
 
                 decoration: BoxDecoration(
                   color: Colors.black,
-                  borderRadius: .circular(15),
+                  borderRadius: .circular(25),
                 ),
-                child: Center(
-                  child: Obx(
-                    () => controller.isLoading.value
-                        ? CircularProgressIndicator()
-                        : Text(
-                            controller.args != null
-                                ? "Update Task"
-                                : "Add Task",
-                            style: TextStyle(fontSize: 16, color: Colors.white),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+
+                    children: [
+                      Row(
+                        children: [
+                          Obx(
+                            () => controller.isLoading.value
+                                ? CircularProgressIndicator()
+                                : Text(
+                                    controller.args != null
+                                        ? "Update Task"
+                                        : "ADD TASKS",
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: Colors.white,
+                                    ),
+                                  ),
                           ),
+                          Spacer(),
+                          Container(
+                            width: 40,
+                            height: 40,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle,
+                            ),
+                            child: Image.asset("assets/img/arrow_up.png"),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
                 ),
               ),

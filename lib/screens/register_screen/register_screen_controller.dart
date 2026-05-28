@@ -4,9 +4,19 @@ class RegisterScreenViewController extends GetxController {
   var fnCtrl = TextEditingController();
   var emailCtrl = TextEditingController();
   var passwordCtrl = TextEditingController();
+  var confirmPasswordCtrl = TextEditingController();
 
   var authService = AuthService();
   var isLoading = false.obs;
+  RxBool obscurePassword = true.obs;
+  RxBool obscureConfirmPassword = true.obs;
+
+  void togglePasswordVisibility() {
+    obscurePassword.value = !obscurePassword.value;
+  }
+  void toggleConfirmPasswordVisibility() { 
+  obscureConfirmPassword.value = !obscureConfirmPassword.value;
+}
 
   void register() async {
     try {
