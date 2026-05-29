@@ -364,7 +364,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
     return Row(
       children: [
         Shimmer.fromColors(
-          baseColor: Colors.grey,
+          baseColor: Colors.black,
           highlightColor: Colors.grey.shade100,
           child: CircleAvatar(radius: 25),
         ),
@@ -373,7 +373,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Shimmer.fromColors(
-              baseColor: Colors.grey,
+              baseColor: Colors.black,
               highlightColor: Colors.grey.shade100,
               child: Container(width: 100, height: 20, color: Colors.grey),
             ),
