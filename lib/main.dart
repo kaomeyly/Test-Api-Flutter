@@ -1,13 +1,12 @@
 import 'package:dio_todo_list/routes/app_pages.dart';
 import 'package:dio_todo_list/routes/app_routes.dart';
-import 'package:dio_todo_list/screens/spash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/route_manager.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 void main() async {
   await GetStorage.init();
-
   runApp(const MainApp());
 }
 
@@ -26,7 +25,6 @@ class _MainAppState extends State<MainApp> {
     setState(() {
       token = box.read("token");
     });
-
     debugPrint("token : $token");
   }
 
@@ -41,8 +39,8 @@ class _MainAppState extends State<MainApp> {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialRoute: token != null ? AppRoutes.home : AppRoutes.login,
-      // home: SpashScreen(),
       getPages: AppPages.getPages,
+      theme: ThemeData(textTheme: GoogleFonts.spaceGroteskTextTheme()),
     );
   }
 }

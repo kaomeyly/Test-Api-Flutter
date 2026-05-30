@@ -2,6 +2,8 @@ import 'package:dio_todo_list/core/api/tasks_serevice.dart';
 import 'package:dio_todo_list/widgets/txtfield/custom_txtfield.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
 
 part 'add_tasks_binding.dart';
 part 'add_tasks_controller.dart';
@@ -12,55 +14,139 @@ class AddTasksView extends GetView<AddTasksViewController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFF5F4F0),
       appBar: AppBar(
-        title: Text(controller.args != null ? "Update Task" : "Add Task"),
+        backgroundColor: const Color(0xFFF5F4F0),
+        elevation: 0,
+        leading: GestureDetector(
+          onTap: () => Get.back(),
+          child: Container(
+            margin: const EdgeInsets.all(8),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(50),
+              border: Border.all(color: Colors.black12),
+            ),
+            child: const Icon(Icons.arrow_back, size: 18, color: Colors.black),
+          ),
+        ),
+        title: Text(
+          controller.args != null ? "Update Task" : "Add New Tasks",
+          style: GoogleFonts.spaceGrotesk(
+            fontSize: 15,
+            fontWeight: FontWeight.w600,
+            color: Colors.black87,
+          ),
+        ),
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(10.0),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.fromLTRB(20, 8, 20, 30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "ADD TASKS",
-              style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+              controller.args != null ? "UPDATE TASK" : "ADD TASKS",
+              style: GoogleFonts.spaceGrotesk(
+                fontSize: 48,
+                fontWeight: FontWeight.w800,
+                height: 0.95,
+                letterSpacing: -1,
+                color: const Color(0xFF1A1A1A),
+              ),
             ),
+            const SizedBox(height: 6),
             Text(
               "Turn Khmer documents, images, and PDFs into editable text instantly.",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.normal),
+              style: GoogleFonts.spaceGrotesk(
+                fontSize: 13,
+                color: Colors.grey,
+                height: 1.4,
+                fontWeight: FontWeight.w700,
+              ),
             ),
-            SizedBox(height: 30),
-            Text(
-              "Title",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            const SizedBox(height: 28),
+
+            _label("Title"),
+            const SizedBox(height: 6),
+            _inputField(
+              child: customtextfield(
+                controller: controller.nameCtrl,
+                hintText: "Enter your task title",
+                focusNode: controller.nameFocus,
+              ),
             ),
-            SizedBox(height: 3),
-            customtextfield(
-              controller: controller.nameCtrl,
-              hintText: "Enter task name",
-              focusNode: controller.nameFocus,
+            const SizedBox(height: 16),
+
+            _label("Description"),
+            const SizedBox(height: 6),
+            _inputField(
+              child: customtextfield(
+                hintText: "Enter your task description ...",
+                controller: controller.desCtrl,
+                isMultiline: true,
+              ),
             ),
-            SizedBox(height: 15),
-            Text(
-              "Description",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+            const SizedBox(height: 16),
+
+            _label("Priority"),
+            const SizedBox(height: 6),
+            Obx(
+              () => _dropdownField(
+                value: controller.selectedPriority.value.isEmpty
+                    ? null
+                    : controller.selectedPriority.value,
+                hint: "Select task priority",
+                items: controller.priorities,
+                onChanged: (val) {
+                  if (val != null) controller.selectedPriority.value = val;
+                },
+              ),
             ),
-            SizedBox(height: 3),
-            customtextfield(
-              hintText: "Enter task description",
-              controller: controller.desCtrl,
-              isMultiline: true,
+            const SizedBox(height: 16),
+
+            Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _label("Start Date"),
+                      const SizedBox(height: 6),
+                      Obx(
+                        () => _dateField(
+                          label: controller.startDate.value == null
+                              ? DateFormat('dd-MMM-yyyy').format(DateTime.now())
+                              : controller.formatDate(
+                                  controller.startDate.value,
+                                ),
+                          onTap: () => controller.pickStartDate(context),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _label("Due Date"),
+                      const SizedBox(height: 6),
+                      Obx(
+                        () => _dateField(
+                          label: controller.formatDate(
+                            controller.dueDate.value,
+                          ),
+                          onTap: () => controller.pickDueDate(context),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-            SizedBox(height: 10),
-            Text(
-              "Priority",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 3),
-            customtextfield(
-              hintText: "Select task priority",
-              controller: controller.desCtrl,
-            ),
-            Spacer(),
+            const SizedBox(height: 32),
+
             GestureDetector(
               onTap: () {
                 FocusScope.of(Get.context!).unfocus();
@@ -69,51 +155,148 @@ class AddTasksView extends GetView<AddTasksViewController> {
                     : controller.createTasks();
               },
               child: Container(
-                height: 50,
+                height: 56,
                 width: double.infinity,
-
                 decoration: BoxDecoration(
                   color: Colors.black,
-                  borderRadius: .circular(25),
+                  borderRadius: BorderRadius.circular(28),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-
-                    children: [
-                      Row(
-                        children: [
-                          Obx(
-                            () => controller.isLoading.value
-                                ? CircularProgressIndicator()
-                                : Text(
-                                    controller.args != null
-                                        ? "Update Task"
-                                        : "ADD TASKS",
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                          ),
-                          Spacer(),
-                          Container(
-                            width: 40,
-                            height: 40,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Row(
+                  children: [
+                    Obx(
+                      () => controller.isLoading.value
+                          ? const SizedBox(
+                              width: 20,
+                              height: 20,
+                              child: CircularProgressIndicator(
+                                strokeWidth: 2,
+                                color: Colors.white,
+                              ),
+                            )
+                          : Text(
+                              controller.args != null
+                                  ? "Update Task"
+                                  : "Add Task",
+                              style: GoogleFonts.spaceGrotesk(
+                                fontSize: 16,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
                             ),
-                            child: Image.asset("assets/img/arrow_up.png"),
-                          ),
-                        ],
+                    ),
+                    const Spacer(),
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        shape: BoxShape.circle,
                       ),
-                    ],
-                  ),
+                      child: const Icon(
+                        Icons.arrow_outward_rounded,
+                        color: Colors.black,
+                        size: 20,
+                      ),
+                    ),
+                  ],
                 ),
               ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _label(String text) {
+    return Text(
+      text,
+      style: GoogleFonts.spaceGrotesk(
+        fontSize: 14,
+        fontWeight: FontWeight.w600,
+        color: const Color(0xFF1A1A1A),
+      ),
+    );
+  }
+
+  Widget _inputField({required Widget child}) {
+    return Container(
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: Colors.black12),
+      ),
+      child: child,
+    );
+  }
+
+  Widget _dropdownField({
+    required String? value,
+    required String hint,
+    required List<String> items,
+    required void Function(String?) onChanged,
+  }) {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(14),
+        border: Border.all(color: Colors.black12),
+      ),
+      child: DropdownButtonHideUnderline(
+        child: DropdownButton<String>(
+          value: value,
+          hint: Text(
+            hint,
+            style: GoogleFonts.spaceGrotesk(
+              fontSize: 14,
+              color: Colors.grey.shade400,
+            ),
+          ),
+          isExpanded: true,
+          icon: Icon(
+            Icons.keyboard_arrow_down_rounded,
+            color: Colors.grey.shade500,
+          ),
+          style: GoogleFonts.spaceGrotesk(
+            fontSize: 14,
+            color: const Color(0xFF1A1A1A),
+          ),
+          items: items
+              .map((e) => DropdownMenuItem(value: e, child: Text(e)))
+              .toList(),
+          onChanged: onChanged,
+        ),
+      ),
+    );
+  }
+
+  Widget _dateField({required String label, required VoidCallback onTap}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(14),
+          border: Border.all(color: Colors.black12),
+        ),
+        child: Row(
+          children: [
+            Expanded(
+              child: Text(
+                label,
+                style: GoogleFonts.spaceGrotesk(
+                  fontSize: 13,
+                  color: const Color(0xFF1A1A1A),
+                ),
+              ),
+            ),
+            Icon(
+              Icons.keyboard_arrow_down_rounded,
+              color: Colors.grey.shade500,
+              size: 20,
             ),
           ],
         ),
