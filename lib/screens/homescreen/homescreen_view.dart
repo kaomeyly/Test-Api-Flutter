@@ -21,8 +21,8 @@ class HomescreenView extends GetView<HomescreenViewController> {
     return Scaffold(
       backgroundColor: const Color(0xFFF5F4F0),
       floatingActionButton: FloatingActionButton(
-        backgroundColor: const Color(0xFF4B3FA0),
-        foregroundColor: Colors.white,
+        backgroundColor: Colors.grey.shade400,
+        foregroundColor: Colors.black,
         elevation: 4,
         onPressed: () {
           Get.toNamed(AppRoutes.addTask)!.then((value) {
@@ -229,6 +229,8 @@ class HomescreenView extends GetView<HomescreenViewController> {
   }
 
   Widget _tabBadge({required String label, required bool active}) {
+    final int count = int.tryParse(label) ?? 0;
+    final String display = count < 10 ? '0$count' : '$count';
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
@@ -239,7 +241,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
         borderRadius: BorderRadius.circular(20),
       ),
       child: Text(
-        label,
+        display,
         style: TextStyle(
           color: active ? Colors.white : Colors.grey.shade600,
           fontSize: 11,
@@ -299,7 +301,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
               Text(
                 "Tap + to add a new task",
                 style: GoogleFonts.spaceGrotesk(
-                  color: Colors.grey.shade400,
+                  color: Colors.black,
                   fontSize: 13,
                 ),
               ),
@@ -345,7 +347,15 @@ class HomescreenView extends GetView<HomescreenViewController> {
         iconColor: const Color(0xFF1A1A1A),
         labelColor: const Color(0xFF1A1A1A),
       ),
-      child: _taskCard(task: task),
+      child: GestureDetector(
+        onTap: () {
+          Get.toNamed(
+            AppRoutes.detailTask,
+            arguments: task,
+          )!.then((_) => controller.getTasks());
+        },
+        child: _taskCard(task: task),
+      ),
     );
   }
 
@@ -396,17 +406,29 @@ class HomescreenView extends GetView<HomescreenViewController> {
   }
 
   Widget _taskCard({required dynamic task}) {
-    final String priority = task["priority"] ?? "High Priority";
+    final String priority = task["priority"]?.toString().trim() ?? "";
+    final String priorityLabel = priority.isNotEmpty ? priority : "No Priority";
+
+    // final String priorityLabel = priority.toLowerCase().contains("high")
+    //     ? "High Priority"
+    //     : priority.toLowerCase().contains("medium")
+    //     ? "Medium Priority"
+    //     : priority.toLowerCase().contains("low")
+    //     ? "Low Priority"
+    //     : "No Priority";
+
     final Color dotColor = priority.toLowerCase().contains("high")
         ? const Color(0xFFE24B4A)
         : priority.toLowerCase().contains("medium")
         ? const Color(0xFFEF9F27)
-        : const Color(0xFF639922);
+        : priority.toLowerCase().contains("low")
+        ? const Color(0xFF639922)
+        : Colors.grey;
 
     return Container(
       padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
       decoration: BoxDecoration(
-        color: const Color(0xFFC8C2B8),
+        color: Colors.grey.shade400,
         borderRadius: BorderRadius.circular(30),
       ),
       child: Column(
@@ -435,7 +457,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
                       ),
                     ),
                     Text(
-                      priority,
+                      priorityLabel,
                       style: GoogleFonts.spaceGrotesk(
                         fontWeight: FontWeight.bold,
                         fontSize: 12,
@@ -614,18 +636,14 @@ class HomescreenView extends GetView<HomescreenViewController> {
           ],
         ),
         const Spacer(),
-        Container(
-          width: 36,
-          height: 36,
-          decoration: BoxDecoration(
-            border: Border.all(color: Colors.black12),
-            borderRadius: BorderRadius.circular(50),
-          ),
-          child: IconButton(
-            padding: EdgeInsets.zero,
-            icon: const Icon(Icons.settings_outlined, size: 18),
-            color: const Color(0xFF1B1919),
-            onPressed: () {},
+        GestureDetector(
+          onTap: () => Get.toNamed(
+            AppRoutes.profile,
+          )!.then((_) => controller.getProfile()),
+          child: SizedBox(
+            width: 20,
+            height: 20,
+            child: Image.asset("assets/img/settings.png", fit: BoxFit.contain),
           ),
         ),
       ],

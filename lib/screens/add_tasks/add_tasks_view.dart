@@ -33,7 +33,7 @@ class AddTasksView extends GetView<AddTasksViewController> {
         title: Text(
           controller.args != null ? "Update Task" : "Add New Tasks",
           style: GoogleFonts.spaceGrotesk(
-            fontSize: 15,
+            fontSize: 17,
             fontWeight: FontWeight.w600,
             color: Colors.black87,
           ),
@@ -89,7 +89,7 @@ class AddTasksView extends GetView<AddTasksViewController> {
             const SizedBox(height: 16),
 
             _label("Priority"),
-            const SizedBox(height: 6),
+            const SizedBox(height: 10),
             Obx(
               () => _dropdownField(
                 value: controller.selectedPriority.value.isEmpty
@@ -111,7 +111,7 @@ class AddTasksView extends GetView<AddTasksViewController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _label("Start Date"),
-                      const SizedBox(height: 6),
+                      const SizedBox(height: 10),
                       Obx(
                         () => _dateField(
                           label: controller.startDate.value == null
@@ -145,7 +145,7 @@ class AddTasksView extends GetView<AddTasksViewController> {
                 ),
               ],
             ),
-            const SizedBox(height: 32),
+            const SizedBox(height: 80),
 
             GestureDetector(
               onTap: () {
@@ -251,7 +251,7 @@ class AddTasksView extends GetView<AddTasksViewController> {
             hint,
             style: GoogleFonts.spaceGrotesk(
               fontSize: 14,
-              color: Colors.grey.shade400,
+              color: Colors.grey.shade500,
             ),
           ),
           isExpanded: true,

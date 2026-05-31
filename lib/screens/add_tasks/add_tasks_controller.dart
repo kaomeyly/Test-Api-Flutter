@@ -50,6 +50,10 @@ class AddTasksViewController extends GetxController {
       var response = await taskSerive.createTasks(
         name: nameCtrl.text,
         description: desCtrl.text,
+        dueDate: dueDate.value,
+        priority: selectedPriority.value.isEmpty
+            ? null
+            : selectedPriority.value,
       );
       isLoading.value = false;
       if (response["result"] == true) {
@@ -74,6 +78,10 @@ class AddTasksViewController extends GetxController {
           id: args["id"],
           name: nameCtrl.text,
           description: desCtrl.text,
+          dueDate: dueDate.value,
+          priority: selectedPriority.value.isEmpty
+              ? null
+              : selectedPriority.value,
         );
         if (response["result"] == true) {
           Get.back();
@@ -95,8 +103,17 @@ class AddTasksViewController extends GetxController {
     if (args != null) {
       nameCtrl.text = args["name"];
       desCtrl.text = args["description"];
-      if (args["priority"] != null) {
-        selectedPriority.value = args["priority"];
+
+      final p = args["priority"]?.toString() ?? "";
+      if (priorities.contains(p)) {
+        selectedPriority.value = p;
+      }
+
+      if (args["due_date"] != null) {
+        dueDate.value = DateTime.tryParse(args["due_date"]);
+      }
+      if (args["created_at"] != null) {
+        startDate.value = DateTime.tryParse(args["created_at"]);
       }
     }
   }

@@ -1,7 +1,9 @@
 import 'package:dio_todo_list/routes/app_routes.dart';
 import 'package:dio_todo_list/screens/add_tasks/add_tasks_view.dart';
+import 'package:dio_todo_list/screens/detail_task/detail_task_view.dart';
 import 'package:dio_todo_list/screens/homescreen/homescreen_view.dart';
 import 'package:dio_todo_list/screens/login_screen/login_screen_view.dart';
+import 'package:dio_todo_list/screens/profile_screen/profile_screen_view.dart';
 import 'package:dio_todo_list/screens/register_screen/register_screen_view.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
@@ -26,6 +28,16 @@ class AppPages {
       name: AppRoutes.addTask,
       page: () => AddTasksView(),
       binding: AddTasksViewBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.detailTask,
+      page: () => DetailTaskView(),
+      binding: DetailTaskViewBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.profile,
+      page: () => ProfileScreenView(),
+      binding: ProfileScreenViewBinding(),
     ),
   ];
 }

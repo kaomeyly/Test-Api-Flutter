@@ -33,6 +33,13 @@ class HomescreenViewController extends GetxController {
     if (!silent) isLoadingTask.value = false;
     tasks.value = response["data"];
 
+    if (tasks.isNotEmpty) {
+      debugPrint("=== TASK DATA ===");
+      debugPrint("All keys: ${tasks[0].keys.toList()}");
+      debugPrint("Priority value: ${tasks[0]["priority"]}");
+      debugPrint("Full task: ${tasks[0]}");
+    }
+
     boradList.value = tasks
         .where((task) => task["completed"] == false)
         .toList();

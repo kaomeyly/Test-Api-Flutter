@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 
 class BaseApiService {
   final ApiConfig apiConfig = ApiConfig();
+
   Future<dynamic> post({
     required String endpoint,
     required Map<String, dynamic> data,
@@ -13,6 +14,26 @@ class BaseApiService {
       return response.data;
     } on DioException catch (e) {
       debugPrint("Error : ${e.message}");
+    }
+  }
+
+  // ← បន្ថែម function នេះ
+  Future<dynamic> postFormData({
+    required String endpoint,
+    required FormData data,
+  }) async {
+    try {
+      var response = await ApiConfig().dio.post(
+        endpoint,
+        data: data,
+        options: Options(contentType: 'multipart/form-data'),
+      );
+      debugPrint(">>> UPLOAD AVATAR RESPONSE: ${response.data}");
+      return response.data;
+    } on DioException catch (e) {
+      debugPrint("postFormData error: ${e.message}");
+      debugPrint("postFormData response: ${e.response?.data}");
+      return {"result": false, "message": e.message};
     }
   }
 
