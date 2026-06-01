@@ -5,10 +5,12 @@ import 'package:dio_todo_list/screens/homescreen/homescreen_view.dart';
 import 'package:dio_todo_list/screens/login_screen/login_screen_view.dart';
 import 'package:dio_todo_list/screens/profile_screen/profile_screen_view.dart';
 import 'package:dio_todo_list/screens/register_screen/register_screen_view.dart';
+import 'package:dio_todo_list/screens/spash_screen.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
 class AppPages {
   static List<GetPage<dynamic>> getPages = [
+    GetPage(name: AppRoutes.splash, page: () => SpashScreen()),
     GetPage(
       name: AppRoutes.login,
       page: () => LoginScreenView(),

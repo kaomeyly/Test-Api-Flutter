@@ -629,8 +629,9 @@ class HomescreenView extends GetView<HomescreenViewController> {
             Text(
               controller.user.email,
               style: GoogleFonts.spaceGrotesk(
-                fontSize: 12,
-                color: const Color(0xff282C20),
+                fontSize: 15,
+                color: Color(0xff282C20),
+                fontWeight: FontWeight.w400,
               ),
             ),
           ],

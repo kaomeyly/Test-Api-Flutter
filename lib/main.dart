@@ -38,7 +38,8 @@ class _MainAppState extends State<MainApp> {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      initialRoute: token != null ? AppRoutes.home : AppRoutes.login,
+      // initialRoute: token != null ? AppRoutes.home : AppRoutes.login,
+      initialRoute: AppRoutes.splash,
       getPages: AppPages.getPages,
       theme: ThemeData(textTheme: GoogleFonts.spaceGroteskTextTheme()),
     );

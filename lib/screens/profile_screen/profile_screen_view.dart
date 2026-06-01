@@ -104,8 +104,9 @@ class ProfileScreenView extends GetView<ProfileScreenViewController> {
                 child: Text(
                   controller.emailDisplay.value,
                   style: GoogleFonts.spaceGrotesk(
-                    fontSize: 13,
-                    color: Colors.grey,
+                    fontSize: 15,
+                    color: const Color(0xff282C20),
+                    fontWeight: FontWeight.w400,
                   ),
                 ),
               ),
@@ -155,7 +156,7 @@ class ProfileScreenView extends GetView<ProfileScreenViewController> {
     return Text(
       text,
       style: GoogleFonts.spaceGrotesk(
-        fontSize: 12,
+        fontSize: 16,
         fontWeight: FontWeight.bold,
         color: Colors.black,
         letterSpacing: 0.8,
@@ -169,7 +170,7 @@ class ProfileScreenView extends GetView<ProfileScreenViewController> {
     required String subtitle,
     required VoidCallback onTap,
     Color iconColor = Colors.black,
-    Color titleColor = Colors.black,
+    Color titleColor = const Color(0xff282C20),
   }) {
     return GestureDetector(
       onTap: onTap,
@@ -200,7 +201,7 @@ class ProfileScreenView extends GetView<ProfileScreenViewController> {
                   subtitle,
                   style: GoogleFonts.spaceGrotesk(
                     fontSize: 12,
-                    color: Colors.black,
+                    color: Color(0xff282C20),
                     fontWeight: FontWeight.w400,
                   ),
                 ),

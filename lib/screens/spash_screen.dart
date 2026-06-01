@@ -1,6 +1,7 @@
 import 'package:dio_todo_list/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 class SpashScreen extends StatefulWidget {
   const SpashScreen({super.key});
@@ -36,7 +37,8 @@ class _SpashScreenState extends State<SpashScreen>
 
     Future.delayed(const Duration(seconds: 5), () {
       if (mounted) {
-        Get.offAllNamed(AppRoutes.login);
+        final token = GetStorage().read("token");
+        Get.offAllNamed(token != null ? AppRoutes.home : AppRoutes.login);
       }
     });
   }
@@ -58,12 +60,7 @@ class _SpashScreenState extends State<SpashScreen>
               opacity: _fadeAnimation,
               child: ScaleTransition(
                 scale: _scaleAnimation,
-                child: Image.asset(
-                  "assets/img/logo.png",
-                  width: 100,
-                  height: 100,
-                  fit: BoxFit.contain,
-                ),
+                child: Image.asset("assets/img/logo2.png", fit: BoxFit.contain),
               ),
             );
           },

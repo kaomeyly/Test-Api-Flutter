@@ -25,17 +25,25 @@ class DetailTaskView extends GetView<DetailTaskViewController> {
         title: Text(
           "Task Detail",
           style: GoogleFonts.spaceGrotesk(
-            fontSize: 15,
+            fontSize: 18,
             fontWeight: FontWeight.w600,
             color: Colors.black87,
           ),
         ),
         actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 16),
-            child: GestureDetector(
-              onTap: () => controller.deleteTask(),
-              child: const Icon(Icons.delete_outline, color: Colors.black54),
+          GestureDetector(
+            onTap: () => controller.deleteTask(),
+            //
+            child: Padding(
+              padding: const EdgeInsets.only(right: 16.0),
+              child: SizedBox(
+                height: 20,
+                width: 20,
+                child: Image.asset(
+                  "assets/img/delete.png",
+                  fit: BoxFit.contain,
+                ),
+              ),
             ),
           ),
         ],
