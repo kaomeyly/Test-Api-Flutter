@@ -14,9 +14,10 @@ class RegisterScreenViewController extends GetxController {
   void togglePasswordVisibility() {
     obscurePassword.value = !obscurePassword.value;
   }
-  void toggleConfirmPasswordVisibility() { 
-  obscureConfirmPassword.value = !obscureConfirmPassword.value;
-}
+
+  void toggleConfirmPasswordVisibility() {
+    obscureConfirmPassword.value = !obscureConfirmPassword.value;
+  }
 
   void register() async {
     try {
@@ -29,13 +30,16 @@ class RegisterScreenViewController extends GetxController {
       );
 
       if (response["result"] == true) {
+        GetStorage().write("token", response["data"]["token"]);
         Get.snackbar("Success", "Register Successful");
         isLoading.value = false;
         Get.offAllNamed(AppRoutes.home);
-        
+      } else {
+        Get.snackbar("Failed", response["message"] ?? "Register Failed");
+        isLoading.value = false;
       }
     } catch (e) {
-      Get.snackbar("Fail", "Register Failed");
+      Get.snackbar("Failed", "Register Failed");
       isLoading.value = false;
     }
   }

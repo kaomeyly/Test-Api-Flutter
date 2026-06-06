@@ -83,7 +83,6 @@ class LoginScreenView extends GetView<LoginScreenController> {
               ),
             ),
             SizedBox(height: 10),
-            // Continue Button
             GestureDetector(
               onTap: () {
                 controller.login();

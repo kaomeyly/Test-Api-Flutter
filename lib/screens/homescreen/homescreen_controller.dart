@@ -24,6 +24,8 @@ class HomescreenViewController extends GetxController {
     isLoading.value = true;
     var response = await authService.fetchProfile();
     isLoading.value = false;
+    
+    if (response["data"] == null) return;
     user = UserModel.fromMap(response["data"]);
   }
 
@@ -31,8 +33,13 @@ class HomescreenViewController extends GetxController {
     if (!silent) isLoadingTask.value = true;
     var response = await taskSerive.fetchTasks();
     if (!silent) isLoadingTask.value = false;
-    tasks.value = response["data"];
 
+    if (response["result"] == false) {
+      debugPrint("getTasks failed: ${response["message"]}");
+      return;
+    }
+
+    tasks.value = response["data"] ?? [];
     if (tasks.isNotEmpty) {
       debugPrint("=== TASK DATA ===");
       debugPrint("All keys: ${tasks[0].keys.toList()}");

@@ -19,7 +19,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F4F0),
+      backgroundColor: Color(0xFFF5F4F0),
       floatingActionButton: FloatingActionButton(
         backgroundColor: Colors.grey.shade400,
         foregroundColor: Colors.black,
@@ -29,7 +29,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
             controller.getTasks();
           });
         },
-        child: const Icon(Icons.add),
+        child: Icon(Icons.add),
       ),
       body: DefaultTabController(
         length: 2,
@@ -39,7 +39,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 16, 20, 0),
+                  padding: EdgeInsets.fromLTRB(20, 16, 20, 0),
                   child: Obx(
                     () => controller.isLoading.value
                         ? _buildProfilePlaceholder()
@@ -47,16 +47,16 @@ class HomescreenView extends GetView<HomescreenViewController> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 12, 20, 0),
+                  padding: EdgeInsets.fromLTRB(20, 12, 20, 0),
                   child: _buildGreeting(),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(20, 14, 20, 0),
+                  padding: EdgeInsets.fromLTRB(20, 14, 20, 0),
                   child: _buildStatsRow(),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 20),
                   child: Builder(
                     builder: (context) {
                       final tabController = DefaultTabController.of(context);
@@ -79,7 +79,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
                                         label: "${controller.boardCount}",
                                         active: selectedIndex == 0,
                                       ),
-                                      const SizedBox(width: 8),
+                                      SizedBox(width: 8),
                                       Text(
                                         "Tasks",
                                         style: GoogleFonts.spaceGrotesk(
@@ -100,7 +100,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
                                         label: "${controller.doneCount}",
                                         active: selectedIndex == 1,
                                       ),
-                                      const SizedBox(width: 8),
+                                      SizedBox(width: 8),
                                       Text(
                                         "Done",
                                         style: GoogleFonts.spaceGrotesk(
@@ -119,9 +119,9 @@ class HomescreenView extends GetView<HomescreenViewController> {
                     },
                   ),
                 ),
-                const SizedBox(height: 16),
+                SizedBox(height: 16),
                 Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  padding: EdgeInsets.symmetric(horizontal: 20),
                   child: ContentSizeTabBarView(
                     children: [
                       Obx(
@@ -159,7 +159,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
         fontWeight: FontWeight.w700,
         height: 0.95,
         letterSpacing: -1,
-        color: const Color(0xFF1A1A1A),
+        color: Color(0xFF1A1A1A),
       ),
     );
   }
@@ -173,7 +173,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
       final done = controller.doneList.length;
       final pct = total == 0 ? 0 : ((done / total) * 100).round();
       return Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(16),
@@ -197,7 +197,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
                   dateStr,
                   style: GoogleFonts.spaceGrotesk(
                     fontSize: 12,
-                    color: const Color(0xff282C20),
+                    color: Color(0xff282C20),
                   ),
                 ),
               ],
@@ -217,7 +217,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
                   "Completed Tasks",
                   style: GoogleFonts.spaceGrotesk(
                     fontSize: 12,
-                    color: const Color(0xff282C20),
+                    color: Color(0xff282C20),
                   ),
                 ),
               ],
@@ -232,7 +232,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
     final int count = int.tryParse(label) ?? 0;
     final String display = count < 10 ? '0$count' : '$count';
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
         color: active ? Colors.black : Colors.transparent,
         border: active
@@ -254,11 +254,11 @@ class HomescreenView extends GetView<HomescreenViewController> {
   Widget _buildTaskPlaceholder() {
     return ListView.builder(
       shrinkWrap: true,
-      physics: const NeverScrollableScrollPhysics(),
+      physics: NeverScrollableScrollPhysics(),
       itemCount: 3,
       itemBuilder: (context, index) {
         return Padding(
-          padding: const EdgeInsets.only(bottom: 16),
+          padding: EdgeInsets.only(bottom: 16),
           child: Shimmer.fromColors(
             baseColor: Colors.grey.shade300,
             highlightColor: Colors.grey.shade100,
@@ -278,7 +278,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
   Widget _buildTaskList({required List<dynamic> tasks}) {
     if (tasks.isEmpty) {
       return Padding(
-        padding: const EdgeInsets.symmetric(vertical: 60),
+        padding: EdgeInsets.symmetric(vertical: 60),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -288,7 +288,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
                 size: 80,
                 color: Colors.grey.shade400,
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
               Text(
                 "No tasks here",
                 style: GoogleFonts.spaceGrotesk(
@@ -297,7 +297,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
                   fontWeight: FontWeight.w600,
                 ),
               ),
-              const SizedBox(height: 6),
+              SizedBox(height: 6),
               Text(
                 "Tap + to add a new task",
                 style: GoogleFonts.spaceGrotesk(
@@ -311,10 +311,10 @@ class HomescreenView extends GetView<HomescreenViewController> {
       );
     }
     return ListView.separated(
-      physics: const NeverScrollableScrollPhysics(),
+      physics: NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: tasks.length,
-      separatorBuilder: (_, _) => const SizedBox(height: 14),
+      separatorBuilder: (_, _) => SizedBox(height: 14),
       itemBuilder: (context, index) => _swipableTaskCard(task: tasks[index]),
     );
   }
@@ -323,7 +323,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
     return Dismissible(
       key: ValueKey(task["id"]),
       direction: DismissDirection.horizontal,
-      dismissThresholds: const {
+      dismissThresholds: {
         DismissDirection.startToEnd: 0.4,
         DismissDirection.endToStart: 0.4,
       },
@@ -332,7 +332,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
         return false;
       },
       background: _swipeBackground(
-        color: const Color(0xFF1A1A1A),
+        color: Color(0xFF1A1A1A),
         icon: Icons.check_rounded,
         alignment: Alignment.centerLeft,
         label: "Done",
@@ -344,8 +344,8 @@ class HomescreenView extends GetView<HomescreenViewController> {
         icon: Icons.undo_rounded,
         alignment: Alignment.centerRight,
         label: "Undo",
-        iconColor: const Color(0xFF1A1A1A),
-        labelColor: const Color(0xFF1A1A1A),
+        iconColor: Color(0xFF1A1A1A),
+        labelColor: Color(0xFF1A1A1A),
       ),
       child: GestureDetector(
         onTap: () {
@@ -368,7 +368,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
     required Color labelColor,
   }) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 28),
+      padding: EdgeInsets.symmetric(horizontal: 28),
       decoration: BoxDecoration(
         color: color,
         borderRadius: BorderRadius.circular(30),
@@ -379,7 +379,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
         children: [
           if (alignment == Alignment.centerLeft) ...[
             Icon(icon, color: iconColor, size: 22),
-            const SizedBox(width: 8),
+            SizedBox(width: 8),
             Text(
               label,
               style: GoogleFonts.spaceGrotesk(
@@ -397,7 +397,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
                 fontSize: 14,
               ),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: 8),
             Icon(icon, color: iconColor, size: 22),
           ],
         ],
@@ -409,24 +409,16 @@ class HomescreenView extends GetView<HomescreenViewController> {
     final String priority = task["priority"]?.toString().trim() ?? "";
     final String priorityLabel = priority.isNotEmpty ? priority : "No Priority";
 
-    // final String priorityLabel = priority.toLowerCase().contains("high")
-    //     ? "High Priority"
-    //     : priority.toLowerCase().contains("medium")
-    //     ? "Medium Priority"
-    //     : priority.toLowerCase().contains("low")
-    //     ? "Low Priority"
-    //     : "No Priority";
-
     final Color dotColor = priority.toLowerCase().contains("high")
-        ? const Color(0xFFE24B4A)
+        ? Color(0xFFE24B4A)
         : priority.toLowerCase().contains("medium")
-        ? const Color(0xFFEF9F27)
+        ? Color(0xFFEF9F27)
         : priority.toLowerCase().contains("low")
-        ? const Color(0xFF639922)
+        ? Color(0xFF639922)
         : Colors.grey;
 
     return Container(
-      padding: const EdgeInsets.fromLTRB(18, 16, 18, 16),
+      padding: EdgeInsets.fromLTRB(18, 16, 18, 16),
       decoration: BoxDecoration(
         color: Colors.grey.shade400,
         borderRadius: BorderRadius.circular(30),
@@ -437,7 +429,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
           Row(
             children: [
               Container(
-                padding: const EdgeInsets.symmetric(
+                padding: EdgeInsets.symmetric(
                   horizontal: 14,
                   vertical: 8,
                 ),
@@ -450,7 +442,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
                     Container(
                       width: 7,
                       height: 7,
-                      margin: const EdgeInsets.only(right: 6),
+                      margin: EdgeInsets.only(right: 6),
                       decoration: BoxDecoration(
                         color: dotColor,
                         shape: BoxShape.circle,
@@ -466,7 +458,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
                   ],
                 ),
               ),
-              const Spacer(),
+              Spacer(),
               PopupMenuButton(
                 position: PopupMenuPosition.under,
                 color: Colors.white,
@@ -483,8 +475,8 @@ class HomescreenView extends GetView<HomescreenViewController> {
                     },
                     child: Row(
                       children: [
-                        const Icon(Icons.delete_outline, color: Colors.red),
-                        const SizedBox(width: 8),
+                        Icon(Icons.delete_outline, color: Colors.red),
+                        SizedBox(width: 8),
                         Text(
                           "Delete",
                           style: GoogleFonts.spaceGrotesk(
@@ -504,8 +496,8 @@ class HomescreenView extends GetView<HomescreenViewController> {
                     },
                     child: Row(
                       children: [
-                        const Icon(Icons.edit_outlined, color: Colors.green),
-                        const SizedBox(width: 8),
+                        Icon(Icons.edit_outlined, color: Colors.green),
+                        SizedBox(width: 8),
                         Text(
                           "Update",
                           style: GoogleFonts.spaceGrotesk(
@@ -524,12 +516,12 @@ class HomescreenView extends GetView<HomescreenViewController> {
                     borderRadius: BorderRadius.circular(30),
                     color: Colors.black26,
                   ),
-                  child: const Icon(Icons.more_horiz, color: Colors.white),
+                  child: Icon(Icons.more_horiz, color: Colors.white),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 22),
+          SizedBox(height: 22),
           Text(
             task["name"].toString().toUpperCase(),
             style: GoogleFonts.spaceGrotesk(
@@ -537,30 +529,30 @@ class HomescreenView extends GetView<HomescreenViewController> {
               fontWeight: FontWeight.w800,
               letterSpacing: -0.3,
               height: 1.1,
-              color: const Color(0xFF1A1A1A),
+              color: Color(0xFF1A1A1A),
             ),
           ),
-          const SizedBox(height: 4),
+          SizedBox(height: 4),
           Text(
             task["description"] ?? "",
             style: GoogleFonts.spaceGrotesk(
               fontSize: 13,
-              color: const Color(0xFF555555),
+              color: Color(0xFF555555),
               height: 1.4,
             ),
           ),
-          const SizedBox(height: 18),
+          SizedBox(height: 18),
           Row(
             children: [
               Text(
                 "Date : ${controller.formatDateTime(task["created_at"])}",
                 style: GoogleFonts.spaceGrotesk(
                   fontSize: 12,
-                  color: const Color(0xFF666666),
+                  color: Color(0xFF666666),
                   fontWeight: FontWeight.w500,
                 ),
               ),
-              const Spacer(),
+              Spacer(),
               GestureDetector(
                 onTap: () => controller.toggleMarkComplete(id: task["id"]),
                 child: Obx(() {
@@ -572,9 +564,9 @@ class HomescreenView extends GetView<HomescreenViewController> {
                       controller.completedTasksID.value == task["id"];
                   return Container(
                     height: 38,
-                    padding: const EdgeInsets.symmetric(horizontal: 18),
+                    padding: EdgeInsets.symmetric(horizontal: 18),
                     decoration: BoxDecoration(
-                      color: isInBoard ? Colors.white : const Color(0xFF1A1A1A),
+                      color: isInBoard ? Colors.white : Color(0xFF1A1A1A),
                       borderRadius: BorderRadius.circular(50),
                     ),
                     alignment: Alignment.center,
@@ -593,7 +585,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
                               fontWeight: FontWeight.bold,
                               fontSize: 12,
                               color: isInBoard
-                                  ? const Color(0xFF1A1A1A)
+                                  ? Color(0xFF1A1A1A)
                                   : Colors.white,
                             ),
                           ),
@@ -614,7 +606,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
           radius: 22,
           backgroundImage: NetworkImage(controller.user.avatar),
         ),
-        const SizedBox(width: 10),
+        SizedBox(width: 10),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -636,7 +628,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
             ),
           ],
         ),
-        const Spacer(),
+        Spacer(),
         GestureDetector(
           onTap: () => Get.toNamed(
             AppRoutes.profile,
@@ -657,9 +649,9 @@ class HomescreenView extends GetView<HomescreenViewController> {
         Shimmer.fromColors(
           baseColor: Colors.grey.shade300,
           highlightColor: Colors.grey.shade100,
-          child: const CircleAvatar(radius: 22, backgroundColor: Colors.grey),
+          child: CircleAvatar(radius: 22, backgroundColor: Colors.grey),
         ),
-        const SizedBox(width: 10),
+        SizedBox(width: 10),
         Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -670,7 +662,7 @@ class HomescreenView extends GetView<HomescreenViewController> {
                 width: 100,
                 height: 14,
                 color: Colors.grey,
-                margin: const EdgeInsets.only(bottom: 6),
+                margin: EdgeInsets.only(bottom: 6),
               ),
             ),
             Shimmer.fromColors(

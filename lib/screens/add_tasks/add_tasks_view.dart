@@ -14,20 +14,20 @@ class AddTasksView extends GetView<AddTasksViewController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFF5F4F0),
+      backgroundColor: Color(0xFFF5F4F0),
       appBar: AppBar(
-        backgroundColor: const Color(0xFFF5F4F0),
+        backgroundColor: Color(0xFFF5F4F0),
         elevation: 0,
         leading: GestureDetector(
           onTap: () => Get.back(),
           child: Container(
-            margin: const EdgeInsets.all(8),
+            margin: EdgeInsets.all(8),
             decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(50),
               border: Border.all(color: Colors.black12),
             ),
-            child: const Icon(Icons.arrow_back, size: 18, color: Colors.black),
+            child: Icon(Icons.arrow_back, size: 18, color: Colors.black),
           ),
         ),
         title: Text(
@@ -40,7 +40,7 @@ class AddTasksView extends GetView<AddTasksViewController> {
         ),
       ),
       body: SingleChildScrollView(
-        padding: const EdgeInsets.fromLTRB(20, 8, 20, 30),
+        padding: EdgeInsets.fromLTRB(20, 8, 20, 30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -51,10 +51,10 @@ class AddTasksView extends GetView<AddTasksViewController> {
                 fontWeight: FontWeight.w800,
                 height: 0.95,
                 letterSpacing: -1,
-                color: const Color(0xFF1A1A1A),
+                color: Color(0xFF1A1A1A),
               ),
             ),
-            const SizedBox(height: 6),
+            SizedBox(height: 6),
             Text(
               "Turn Khmer documents, images, and PDFs into editable text instantly.",
               style: GoogleFonts.spaceGrotesk(
@@ -64,10 +64,10 @@ class AddTasksView extends GetView<AddTasksViewController> {
                 fontWeight: FontWeight.w700,
               ),
             ),
-            const SizedBox(height: 28),
+            SizedBox(height: 28),
 
             _label("Title"),
-            const SizedBox(height: 6),
+            SizedBox(height: 6),
             _inputField(
               child: customtextfield(
                 controller: controller.nameCtrl,
@@ -75,10 +75,10 @@ class AddTasksView extends GetView<AddTasksViewController> {
                 focusNode: controller.nameFocus,
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
 
             _label("Description"),
-            const SizedBox(height: 6),
+            SizedBox(height: 6),
             _inputField(
               child: customtextfield(
                 hintText: "Enter your task description ...",
@@ -86,10 +86,10 @@ class AddTasksView extends GetView<AddTasksViewController> {
                 isMultiline: true,
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
 
             _label("Priority"),
-            const SizedBox(height: 10),
+            SizedBox(height: 10),
             Obx(
               () => _dropdownField(
                 value: controller.selectedPriority.value.isEmpty
@@ -102,7 +102,7 @@ class AddTasksView extends GetView<AddTasksViewController> {
                 },
               ),
             ),
-            const SizedBox(height: 16),
+            SizedBox(height: 16),
 
             Row(
               children: [
@@ -111,7 +111,7 @@ class AddTasksView extends GetView<AddTasksViewController> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _label("Start Date"),
-                      const SizedBox(height: 10),
+                      SizedBox(height: 10),
                       Obx(
                         () => _dateField(
                           label: controller.startDate.value == null
@@ -125,13 +125,13 @@ class AddTasksView extends GetView<AddTasksViewController> {
                     ],
                   ),
                 ),
-                const SizedBox(width: 12),
+                SizedBox(width: 12),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       _label("Due Date"),
-                      const SizedBox(height: 6),
+                      SizedBox(height: 6),
                       Obx(
                         () => _dateField(
                           label: controller.formatDate(
@@ -145,8 +145,7 @@ class AddTasksView extends GetView<AddTasksViewController> {
                 ),
               ],
             ),
-            const SizedBox(height: 80),
-
+            SizedBox(height: 80),
             GestureDetector(
               onTap: () {
                 FocusScope.of(Get.context!).unfocus();
@@ -161,12 +160,12 @@ class AddTasksView extends GetView<AddTasksViewController> {
                   color: Colors.black,
                   borderRadius: BorderRadius.circular(28),
                 ),
-                padding: const EdgeInsets.symmetric(horizontal: 20),
+                padding: EdgeInsets.symmetric(horizontal: 20),
                 child: Row(
                   children: [
                     Obx(
                       () => controller.isLoading.value
-                          ? const SizedBox(
+                          ? SizedBox(
                               width: 20,
                               height: 20,
                               child: CircularProgressIndicator(
@@ -185,15 +184,15 @@ class AddTasksView extends GetView<AddTasksViewController> {
                               ),
                             ),
                     ),
-                    const Spacer(),
+                    Spacer(),
                     Container(
                       width: 40,
                       height: 40,
-                      decoration: const BoxDecoration(
+                      decoration: BoxDecoration(
                         color: Colors.white,
                         shape: BoxShape.circle,
                       ),
-                      child: const Icon(
+                      child: Icon(
                         Icons.arrow_outward_rounded,
                         color: Colors.black,
                         size: 20,
@@ -215,7 +214,7 @@ class AddTasksView extends GetView<AddTasksViewController> {
       style: GoogleFonts.spaceGrotesk(
         fontSize: 14,
         fontWeight: FontWeight.w600,
-        color: const Color(0xFF1A1A1A),
+        color: Color(0xFF1A1A1A),
       ),
     );
   }
@@ -238,7 +237,7 @@ class AddTasksView extends GetView<AddTasksViewController> {
     required void Function(String?) onChanged,
   }) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
+      padding: EdgeInsets.symmetric(horizontal: 16),
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(14),
@@ -261,7 +260,7 @@ class AddTasksView extends GetView<AddTasksViewController> {
           ),
           style: GoogleFonts.spaceGrotesk(
             fontSize: 14,
-            color: const Color(0xFF1A1A1A),
+            color: Color(0xFF1A1A1A),
           ),
           items: items
               .map((e) => DropdownMenuItem(value: e, child: Text(e)))
@@ -276,7 +275,7 @@ class AddTasksView extends GetView<AddTasksViewController> {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 14),
+        padding: EdgeInsets.symmetric(horizontal: 14, vertical: 14),
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(14),
@@ -289,7 +288,7 @@ class AddTasksView extends GetView<AddTasksViewController> {
                 label,
                 style: GoogleFonts.spaceGrotesk(
                   fontSize: 13,
-                  color: const Color(0xFF1A1A1A),
+                  color: Color(0xFF1A1A1A),
                 ),
               ),
             ),

@@ -4,6 +4,7 @@ import 'package:dio_todo_list/widgets/txtfield/custom_txtfield.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 
 part 'register_screen_binding.dart';
 part 'register_screen_controller.dart';
@@ -62,19 +63,16 @@ class RegisterScreenView extends GetView<RegisterScreenViewController> {
               ),
             ),
             SizedBox(height: 20),
-           
+
             Obx(
               () => customtextfield(
                 hintText: "Confirm password",
-                controller:
-                    controller.confirmPasswordCtrl, 
+                controller: controller.confirmPasswordCtrl,
                 obscureText: controller.obscureConfirmPassword.value,
                 icon: GestureDetector(
                   onTap: controller.toggleConfirmPasswordVisibility,
                   child: Icon(
-                    controller
-                            .obscureConfirmPassword
-                            .value
+                    controller.obscureConfirmPassword.value
                         ? Icons.visibility_off
                         : Icons.visibility,
                   ),

@@ -5,8 +5,13 @@ class TasksSerevice {
   final baseApiServie = BaseApiService();
 
   Future<Map<String, dynamic>> fetchTasks() async {
-    var response = await baseApiServie.get(endpoint: "/api/tasks");
-    return response;
+    try {
+      var response = await baseApiServie.get(endpoint: "/api/tasks");
+      return response;
+    } catch (e) {
+      debugPrint("fetchTasks error: $e");
+      return {"result": false, "message": e.toString(), "data": []};
+    }
   }
 
   Future<Map<String, dynamic>> createTasks({
@@ -36,8 +41,13 @@ class TasksSerevice {
   }
 
   Future<Map<String, dynamic>> deleteTask({required String id}) async {
-    var response = await baseApiServie.delete(endpoint: "/api/tasks/$id");
-    return response;
+    try {
+      var response = await baseApiServie.delete(endpoint: "/api/tasks/$id");
+      return response;
+    } catch (e) {
+      debugPrint("deleteTask error: $e");
+      return {"result": false, "message": e.toString()};
+    }
   }
 
   Future<Map<String, dynamic>> updateTask({
@@ -79,16 +89,26 @@ class TasksSerevice {
   }
 
   Future<Map<String, dynamic>> markComplete({required String id}) async {
-    var response = await baseApiServie.put(
-      endpoint: "/api/tasks/mark-completed/$id",
-    );
-    return response;
+    try {
+      var response = await baseApiServie.put(
+        endpoint: "/api/tasks/mark-completed/$id",
+      );
+      return response;
+    } catch (e) {
+      debugPrint("markComplete error: $e");
+      return {"result": false, "message": e.toString()};
+    }
   }
 
   Future<Map<String, dynamic>> unmarkComplete({required String id}) async {
-    var response = await baseApiServie.put(
-      endpoint: "/api/tasks/unmark-completed/$id",
-    );
-    return response;
+    try {
+      var response = await baseApiServie.put(
+        endpoint: "/api/tasks/unmark-completed/$id",
+      );
+      return response;
+    } catch (e) {
+      debugPrint("unmarkComplete error: $e");
+      return {"result": false, "message": e.toString()};
+    }
   }
 }
