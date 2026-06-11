@@ -288,14 +288,15 @@ class AddTasksView extends GetView<AddTasksViewController> {
                 label,
                 style: GoogleFonts.spaceGrotesk(
                   fontSize: 13,
-                  color: Color(0xFF1A1A1A),
+                  color: Colors.grey.shade500,
+                  // color: Color(0xFF1A1A1A),
                 ),
               ),
             ),
             Icon(
               Icons.keyboard_arrow_down_rounded,
               // color: Colors.grey.shade500,
-               color: Color(0xFF1A1A1A),
+              color: Color(0xFF1A1A1A),
               size: 20,
             ),
           ],
