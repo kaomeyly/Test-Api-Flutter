@@ -62,7 +62,7 @@ class RegisterScreenView extends GetView<RegisterScreenViewController> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 30),
 
             Obx(
               () => customtextfield(

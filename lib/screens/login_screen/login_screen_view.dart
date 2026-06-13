@@ -185,7 +185,7 @@ class LoginScreenView extends GetView<LoginScreenController> {
                 ),
               ),
             ),
-            SizedBox(height: 20),
+            SizedBox(height: 22),
             Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
