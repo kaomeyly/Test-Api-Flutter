@@ -133,11 +133,11 @@ class ProfileScreenView extends GetView<ProfileScreenViewController> {
               subtitle: "Change your password",
               onTap: () => _showChangePasswordDialog(),
             ),
-            const SizedBox(height: 22),
+             SizedBox(height: 22),
 
             // LOGOUT
             _sectionLabel("ACCOUNT"),
-            const SizedBox(height: 8),
+             SizedBox(height: 10),
             _settingItem(
               icon: Icons.logout,
               title: "Logout",
