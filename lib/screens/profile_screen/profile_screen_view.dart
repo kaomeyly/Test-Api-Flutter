@@ -105,16 +105,16 @@ class ProfileScreenView extends GetView<ProfileScreenViewController> {
                   controller.emailDisplay.value,
                   style: GoogleFonts.spaceGrotesk(
                     fontSize: 15,
-                    color: const Color(0xff282C20),
+                    color:  Color(0xff282C20),
                     fontWeight: FontWeight.w400,
                   ),
                 ),
               ),
             ),
-            const SizedBox(height: 28),
+             SizedBox(height: 25),
 
             _sectionLabel("PERSONAL INFORMATION"),
-            const SizedBox(height: 8),
+             SizedBox(height: 8),
             _settingItem(
               icon: Icons.person_outline,
               title: "Change Name",
