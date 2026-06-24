@@ -111,7 +111,7 @@ class ProfileScreenView extends GetView<ProfileScreenViewController> {
                 ),
               ),
             ),
-             SizedBox(height: 25),
+             SizedBox(height: 20),
 
             _sectionLabel("PERSONAL INFORMATION"),
              SizedBox(height: 8),
